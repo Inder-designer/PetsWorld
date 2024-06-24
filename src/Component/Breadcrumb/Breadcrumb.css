@@ -1,0 +1,6 @@
+.tp-breadcrumb__active a{
+    color: var(--tp-text-3) !important;
+}
+.tp-breadcrumb__active a:hover {
+    color: var(--tp-heading-secondary) !important;
+}

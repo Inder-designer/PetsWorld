@@ -1,0 +1,232 @@
+/*----------------------------------------*/
+/*  27. FOOTER CSS
+/*----------------------------------------*/
+.feature-area{
+    position: relative;
+}
+.feature-area .bg_img{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    z-index: 0;
+}
+.mainfeature__border{
+    z-index: 999;
+}
+.tpfooter__top {
+    border-bottom: 1px solid #484492;
+  }
+  .tpfooter__widget-title {
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--tp-common-white);
+    margin-bottom: 30px;
+  }
+  .tpfooter__widget p {
+    color: var(--tp-grey-10);
+    font-size: 16px;
+    margin-bottom: 0;
+  }
+  .tpfooter__widget p a {
+    color: var(--tp-heading-secondary) !important;
+  }
+  .tpfooter__widget-social a {
+    color: var(--tp-common-white) !important;
+    font-size: 16px;
+    margin-right: 5px;
+  }
+  .tpfooter__widget-social a:hover {
+    color: var(--tp-heading-secondary) !important;
+  }
+  .tpfooter__widget-social-title {
+    color: var(--tp-grey-10);
+    display: block;
+  }
+  .tpfooter__widget-social img {
+    width: 100%;
+  }
+  .tpfooter__widget-time-info span {
+    font-size: 16px;
+    color: var(--tp-grey-10);
+    display: block;
+  }
+  .tpfooter__widget-time-info span b {
+    font-weight: 400;
+    font-size: 16px;
+    color: var(--tp-common-white);
+  }
+  @media only screen and (min-width: 1200px) and (max-width: 1399px) {
+    .tpfooter__widget-time-info span b {
+      font-size: 15px;
+    }
+  }
+  @media only screen and (min-width: 576px) and (max-width: 767px) {
+    .tpfooter__widget-time-info span b {
+      font-size: 13px;
+    }
+  }
+  .tpfooter__widget-links ul li {
+    list-style: none;
+  }
+  .tpfooter__widget-links ul li a {
+    font-size: 16px;
+    color: var(--tp-grey-10) !important;
+    -webkit-transition: all 0.3s ease-out 0s;
+    -moz-transition: all 0.3s ease-out 0s;
+    -ms-transition: all 0.3s ease-out 0s;
+    -o-transition: all 0.3s ease-out 0s;
+    transition: all 0.3s ease-out 0s;
+    display: inline-block;
+    margin-bottom: 8px;
+  }
+  .tpfooter__widget-links ul li a:hover {
+    color: var(--tp-common-white) !important;
+    padding-left: 8px;
+  }
+  .tpfooter__widget-newsletter p {
+    font-size: 16px;
+    color: var(--tp-common-white);
+    margin-bottom: 20px;
+  }
+  @media only screen and (min-width: 576px) and (max-width: 767px) {
+    .tpfooter__widget-newsletter p br {
+      display: none;
+    }
+  }
+  .tpfooter__widget-newsletter form {
+    position: relative;
+  }
+  .tpfooter__widget-newsletter form input {
+    border-radius: 3px;
+    height: 50px;
+    width: 100%;
+    background-color: var(--tp-common-white);
+    border: none;
+    padding: 5px 150px 5px 50px;
+  }
+  .tpfooter__widget-newsletter form input::placeholder {
+    color: #ACAFB7;
+    font-size: 14px;
+  }
+  .tpfooter__widget-newsletter form span {
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .tpfooter__widget-newsletter-submit {
+    position: absolute;
+    right: 2px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .tpfooter__widget-newsletter-check .form-check-label {
+    font-size: 14px;
+    color: var(--tp-common-white);
+  }
+  .tpfooter__widget-newsletter-check .form-check-input:checked {
+    background-color: var(--tp-heading-secondary);
+    border-color: transparent;
+  }
+  .tpfooter__widget-newsletter-check .form-check-input:focus {
+    box-shadow: none;
+  }
+  .tpfooter__widget-newsletter-check .form-check-input.form-check-input[type=checkbox] {
+    border-radius: 2px;
+  }
+  @media only screen and (min-width: 576px) and (max-width: 767px) {
+    .tpfooter__copyright {
+      text-align: center;
+    }
+  }
+  @media (max-width: 767px), only screen and (min-width: 576px) and (max-width: 767px) {
+    .tpfooter__copyright {
+      margin-bottom: 20px;
+    }
+  }
+  .tpfooter__copyright-text {
+    font-size: 16px;
+    color: var(--tp-grey-10);
+  }
+  .tpfooter__copyright-text a {
+    color: var(--tp-heading-secondary) !important;
+  }
+  @media (max-width: 767px), only screen and (min-width: 576px) and (max-width: 767px) {
+    .tpfooter__copyright-thumb {
+      text-align: center !important;
+    }
+  }
+  .tpfooter__copyright-thumb img {
+    max-width: 100%;
+  }
+  .tpfooter__phone-num {
+    font-weight: 500;
+    font-size: 30px;
+    line-height: 43px;
+    color: var(--tp-heading-secondary);
+    line-height: 1;
+  }
+  .tpfooter__phone-num:hover {
+    color: var(--tp-common-white);
+  }
+  .tpfooter__border {
+    border-top: 3px solid var(--tp-heading-secondary);
+  }
+  
+  .footer-col-2 {
+    margin-left: -40px;
+  }
+  @media only screen and (min-width: 1200px) and (max-width: 1399px) {
+    .footer-col-2 {
+      margin-left: -15px;
+    }
+  }
+  @media only screen and (min-width: 992px) and (max-width: 1199px), only screen and (min-width: 768px) and (max-width: 991px), (max-width: 767px), only screen and (min-width: 576px) and (max-width: 767px) {
+    .footer-col-2 {
+      margin-left: 0px;
+    }
+  }
+  
+  .footer-col-3 {
+    margin-left: -100px;
+  }
+  @media only screen and (min-width: 1200px) and (max-width: 1399px) {
+    .footer-col-3 {
+      margin-left: -10px;
+    }
+  }
+  @media only screen and (min-width: 992px) and (max-width: 1199px), only screen and (min-width: 768px) and (max-width: 991px), (max-width: 767px), only screen and (min-width: 576px) and (max-width: 767px) {
+    .footer-col-3 {
+      margin-left: 0px;
+    }
+  }
+  
+  .footer-col-4 {
+    margin-left: 60px;
+    position: relative;
+  }
+  @media only screen and (min-width: 992px) and (max-width: 1199px), only screen and (min-width: 768px) and (max-width: 991px), (max-width: 767px), only screen and (min-width: 576px) and (max-width: 767px) {
+    .footer-col-4 {
+      margin-left: 0px;
+    }
+  }
+  .footer-col-4::before {
+    position: absolute;
+    content: "";
+    height: 100%;
+    width: 1px;
+    background-color: #484492;
+    left: -100px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  @media only screen and (min-width: 992px) and (max-width: 1199px), only screen and (min-width: 768px) and (max-width: 991px), (max-width: 767px), only screen and (min-width: 576px) and (max-width: 767px) {
+    .footer-col-4::before {
+      display: none;
+    }
+  }
+  
+  .footer-border {
+    border-top: 2px solid var(--tp-heading-secondary);
+  }
