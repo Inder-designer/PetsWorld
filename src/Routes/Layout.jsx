@@ -24,7 +24,7 @@ const Layout = () => {
         {
           path: "/",
           element: <Home />,
-        },
+        }, 
         {
           path: "/:productId",
           element: <ProductDetail/>,
