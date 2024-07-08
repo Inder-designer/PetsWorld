@@ -18,16 +18,17 @@ import {
 import Product from "../components/product/Product";
 import { toast } from "react-toastify";
 import { addToCart, getCartItems } from "../actions/cartAction";
+import Loading from "../components/Loading";
 
 const ProductDetail = () => {
   const { productId } = useParams();
   const id = productId.split("+")[0];
   const dispatch = useDispatch();
-  const { product, isLoading } = useSelector((state) => state.product);
+  const { product, isLoading, error } = useSelector((state) => state.product);
   const { products } = useSelector((state) => state.products);
   const [quantity, setQuantity] = useState(1);
+  const [productImg, setProductImg] = useState();
   const reviewSectionRef = useRef(null);
-  // console.log(product);
 
   const calculateTotalRating = () => {
     if (!product || !product.reviews || product.reviews.length === 0) return 0;
@@ -35,15 +36,24 @@ const ProductDetail = () => {
   };
   const totalRating = calculateTotalRating();
 
-  const imageUrl =
-    product.images && product.images.length > 0
-      ? product.images[0].url
-      : product1;
+  useEffect(() => {
+    dispatch(getProduct());
+    dispatch(getProductDetail(id));
+    setQuantity(1);
+  }, [dispatch, id]);
+
+  useEffect(() => {
+    if (product && product.images && product.images.length > 0) {
+      setProductImg(product.images[0].url);
+    } else {
+      setProductImg(product1);
+    }
+  }, [product]);
 
   const options = {
     edit: false,
     activeColor: "tomato",
-    value: product.ratings,
+    value: product ? product.ratings : 0,
     size: 20,
     isHalf: true,
   };
@@ -87,22 +97,16 @@ const ProductDetail = () => {
     dispatch(addToCart(quantity, product._id));
   };
 
-  useEffect(() => {
-    dispatch(getProduct());
-    dispatch(getProductDetail(id));
-    setQuantity(1);
-  }, [dispatch, id]);
-
   return (
     <div className="py-10">
       {isLoading ? (
-        "Loading"
-      ) : (
+        <Loading />
+      ) : product ? (
         <div className="container mx-auto">
           <div className="flex">
             <div className="w-3/5">
               <div className=" sticky top-0">
-                <img src={imageUrl} alt="" />
+                <img src={productImg} alt="" />
               </div>
             </div>
             <div className="w-2/5  px-8">
@@ -128,87 +132,92 @@ const ProductDetail = () => {
                 </a>
               )}
               <hr />
-              <div className="mt-2 price ">
-                <span className=" font-bold  text-2xl">
-                  {product.discount
-                    ? CurrencyFormat(
-                        DiscountPrice(product.price, product.discount)
-                      )
-                    : CurrencyFormat(product.price)}
-                </span>
-                {product.discount ? (
-                  <span className="text-gray-400 text-sm ml-3">
-                    MRP <del>{CurrencyFormat(product.price)}</del>
-                  </span>
-                ) : (
-                  ""
-                )}
-                {product.discount ? (
-                  <span className="ml-2 text-orange-400 font-semibold">
-                    ({product.discount}% OFF)
-                  </span>
-                ) : (
-                  ""
-                )}
-                {product.Stock < 2 ? (
-                  <p className="text-sm font-semibold text-red-400">
-                    Only {product.Stock} left in stock - order soon.
-                  </p>
-                ) : product.Stock < 5 ? (
-                  <p className="text-sm font-semibold text-red-400">
-                    Hurry, only few left!
-                  </p>
-                ) : (
-                  ""
-                )}
-                <p className="text-sm font-semibold text-gray-400 mt-2">
-                  Inclusive of all taxes
-                </p>
-              </div>
-              <div className="quantity mt-4">
-                <div className="flex items-center">
-                  <span className="mr-2">Quantity:</span>
-                  <button
-                    className="bg-[#636363] text-white font-semibold 
-             w-6 flex items-center justify-center py-0.5"
-                    onClick={handleDecrement}
-                    disabled={quantity <= 1}
-                  >
-                    <RemoveOutlined className="!text-lg" />
-                  </button>
-                  <input
-                    type="text"
-                    name=""
-                    id=""
-                    className="text-center text-black text-sm font-semibold w-8
-             px-2 py-0.5 !border-gray-300"
-                    disabled
-                    value={quantity}
-                  />
-                  <button
-                    className="bg-[#636363] text-white font-semibold 
-              w-6 flex items-center justify-center py-0.5"
-                    onClick={handleIncrement}
-                  >
-                    <AddOutlined className="!text-lg" />
-                  </button>
+              {product.Stock ? (
+                <div>
+                  <div className="mt-2 price ">
+                    <span className=" font-bold  text-2xl">
+                      {product.discount
+                        ? CurrencyFormat(
+                            DiscountPrice(product.price, product.discount)
+                          )
+                        : CurrencyFormat(product.price)}
+                    </span>
+                    {product.discount ? (
+                      <span className="text-gray-400 text-sm ml-3">
+                        MRP <del>{CurrencyFormat(product.price)}</del>
+                      </span>
+                    ) : (
+                      ""
+                    )}
+                    {product.discount ? (
+                      <span className="ml-2 text-orange-400 font-semibold">
+                        ({product.discount}% OFF)
+                      </span>
+                    ) : (
+                      ""
+                    )}
+                    {product.Stock < 2 ? (
+                      <p className="text-sm font-semibold text-red-400">
+                        Only {product.Stock} left in stock - order soon.
+                      </p>
+                    ) : product.Stock < 5 ? (
+                      <p className="text-sm font-semibold text-red-400">
+                        Hurry, only a few left!
+                      </p>
+                    ) : null}
+                    <p className="text-sm font-semibold text-gray-400 mt-2">
+                      Inclusive of all taxes
+                    </p>
+                  </div>
+                  <div className="quantity mt-4">
+                    <div className="flex items-center">
+                      <span className="mr-2">Quantity:</span>
+                      <button
+                        className="bg-[#636363] text-white font-semibold 
+             w-6 flex items-center justify-center py-0.5 h-6"
+                        onClick={handleDecrement}
+                        disabled={quantity <= 1}
+                      >
+                        <RemoveOutlined className="!text-lg" />
+                      </button>
+                      <input
+                        type="text"
+                        name=""
+                        id=""
+                        className="text-center text-black text-sm font-semibold w-8
+             px-2 py-0.5 !border-gray-300 h-6"
+                        disabled
+                        value={quantity}
+                      />
+                      <button
+                        className="bg-[#636363] text-white font-semibold 
+              w-6 flex items-center justify-center py-0.5  h-6"
+                        onClick={handleIncrement}
+                      >
+                        <AddOutlined className="!text-lg" />
+                      </button>
+                    </div>
+                  </div>
+                  <div className="cartBtn mt-6 flex gap-5 ">
+                    <button
+                      className="w-3/5 bg-[#ff3e6c] hover:bg-[#ff3e6bda] uppercase  text-white font-semibold py-4
+             text-sm rounded flex items-center justify-center "
+                      onClick={handleAddToCart}
+                    >
+                      <ShoppingBasket className="mr-3 !text-xl" /> Add to Cart
+                    </button>
+                    <button
+                      className="w-2/5 border hover:border-[#636363] uppercase  text-gray-600 font-semibold py-4
+             text-sm rounded flex items-center justify-center "
+                    >
+                      <FavoriteBorderOutlined className="mr-3 !text-xl" />{" "}
+                      Whishlist
+                    </button>
+                  </div>{" "}
                 </div>
-              </div>
-              <div className="cartBtn mt-6 flex gap-5 ">
-                <button
-                  className="w-3/5 bg-[#ff3e6c] hover:bg-[#ff3e6bda] uppercase  text-white font-semibold py-4
-             text-sm rounded flex items-center justify-center "
-                  onClick={handleAddToCart}
-                >
-                  <ShoppingBasket className="mr-3 !text-xl" /> Add to Cart
-                </button>
-                <button
-                  className="w-2/5 border hover:border-[#636363] uppercase  text-gray-600 font-semibold py-4
-             text-sm rounded flex items-center justify-center "
-                >
-                  <FavoriteBorderOutlined className="mr-3 !text-xl" /> Whishlist
-                </button>
-              </div>
+              ) : (
+                <p className="py-10 text-2xl font-semibold">Currently Unavailable</p>
+              )}
               <hr className="my-7" />
               <div className="p_detail ">
                 <h6 className="uppercase font-bold text-gray-700 mb-3 ">
@@ -268,7 +277,7 @@ const ProductDetail = () => {
                 </p>
               </div>
               <hr className="my-7" />
-              {product.numOfReviews != 0 ? (
+              {product.numOfReviews != 0 && (
                 <div id="Ratings" className="p_review " ref={reviewSectionRef}>
                   <h6 className="uppercase font-bold text-gray-700 mb-3 ">
                     Ratings & Review
@@ -311,22 +320,31 @@ const ProductDetail = () => {
                       : ""}
                   </div>
                 </div>
-              ) : (
-                ""
               )}
             </div>
           </div>
           <div>
-            <h2 className="text-2xl font-bold text-gray-800 mb-3">
+            <h2 className="text-2xl font-bold text-gray-800 mb-3 mt-5">
               Similar Products
             </h2>
-            <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
-              {/* {products.isLoading ? "Loading" : */}
+            <div className=" max-w-[310px] mx-auto sm:max-w-full grid sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6">
               {products.map((product) => (
                 <Product key={product._id} product={product} />
               ))}
-              {/* } */}
             </div>
+          </div>
+        </div>
+      ) : (
+        <div className="container mx-auto">
+          <div className="flex items-center justify-center flex-col">
+            <img
+              src="https://cdni.iconscout.com/illustration/premium/thumb/sorry-item-not-found-3328225-2809510.png?f=webp"
+              alt=""
+              width="300px"
+            />
+            <p className="text-3xl font-bold text-gray-800 mb-3 mt-5">
+              Product Not Found
+            </p>
           </div>
         </div>
       )}

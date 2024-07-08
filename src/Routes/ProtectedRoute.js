@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Cookies from 'js-cookie';
+import Loading from '../components/Loading';
 
 const ProtectedRoute = ({ children }) => {
     const { isAuthenticated, isLoading } = useSelector((state) => state.user);
@@ -36,7 +37,7 @@ const ProtectedRoute = ({ children }) => {
   }, []);
   
     if (loading || isLoading) {
-      return <div>Loading...</div>;
+      return <Loading/>
     }
 
     if (!isAuthenticated) {

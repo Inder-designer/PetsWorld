@@ -12,9 +12,36 @@ import ProtectedRoute from "./ProtectedRoute";
 import Profile from "../Pages/Profile";
 import ProductDetail from "../Pages/ProductDetail";
 import CartPage from "../Pages/CartPage";
+import Checkout from "../Pages/Checkout";
+import PaymentPage from "../Pages/PaymentPage";
+import axios from "axios";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+import { API_URL, CONFIG } from "../constants/apiConstants";
+import OrderSuccess from "../components/OrderSuccess";
+import OrderDetails from "../Pages/OrderDetails";
+import Orders from "../Pages/Orders";
+import SearchPage from "../Pages/SearchPage.jsx";
+import ForgotPassword from "../components/Auth/ForgotPassword.jsx";
+import ResetPswd from "../components/Auth/ResetPswd.jsx";
 
 const Layout = () => {
   const { isAuthenticated, isLoading } = useSelector((state) => state.user);
+  const [stripeApiKey, setStripeApiKey] = useState("");
+
+  async function getStripeApiKey() {
+    try {
+      const { data } = await axios.get(`${API_URL}/stripeapikey`, CONFIG);
+      setStripeApiKey(data.stripeApiKey);
+    } catch (error) {
+      console.error("Failed to fetch Stripe API key:", error);
+    }
+  }
+  useEffect(() => {
+    if (!isLoading && isAuthenticated) {
+      getStripeApiKey();
+    }
+  }, [isAuthenticated]);
 
   const router = createBrowserRouter([
     {
@@ -24,16 +51,20 @@ const Layout = () => {
         {
           path: "/",
           element: <Home />,
-        }, 
+        },
         {
           path: "/:productId",
-          element: <ProductDetail/>,
+          element: <ProductDetail />,
+        },
+        {
+          path: "/search",
+          element: <SearchPage/>,
         },
         {
           path: "/profile",
           element: (
             <ProtectedRoute>
-              <Profile />
+            <Profile />
             </ProtectedRoute>
           ),
         },
@@ -45,11 +76,61 @@ const Layout = () => {
             </ProtectedRoute>
           ),
         },
+        {
+          path: "/checkout",
+          element: (
+            <ProtectedRoute>
+              <Checkout />
+            </ProtectedRoute>
+          ),
+        },
+        {
+          path: "/checkout/payment",
+          element: (
+            <Elements stripe={loadStripe(stripeApiKey)}>
+              <ProtectedRoute>
+                <PaymentPage />
+              </ProtectedRoute>
+            </Elements>
+          ),
+        },
+        {
+          path: "/checkout/confirm",
+          element: (
+            <ProtectedRoute>
+              <OrderSuccess />
+            </ProtectedRoute>
+          ),
+        },
+        {
+          path: "/order_details",
+          element: (
+            <ProtectedRoute>
+              <OrderDetails />
+            </ProtectedRoute>
+          ),
+        },
+        {
+          path: "/my/orders",
+          element: (
+            <ProtectedRoute>
+              <Orders />
+            </ProtectedRoute>
+          ),
+        },
       ],
     },
     {
       path: "/sign-in",
-      element: isAuthenticated ? <Navigate to="/" /> : <Auth />,
+      element: <Auth />,
+    },
+    {
+      path: "/password/forgot_password",
+      element: <ForgotPassword />,
+    },
+    {
+      path: "/password/reset/:token",
+      element: <ResetPswd />,
     },
   ]);
   return <RouterProvider router={router} />;

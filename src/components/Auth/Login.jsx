@@ -5,27 +5,42 @@ import {
   VisibilityOutlined,
 } from "@mui/icons-material";
 import { Field, Form, Formik } from "formik";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { UserSchemas } from "../../schema/Schema.js";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { userLogin } from "../../actions/userAction.js";
-import { useNavigate } from "react-router-dom";
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 
 const Login = () => {
     const dispatch = useDispatch()
-    const navigate= useNavigate()
   const [showPassword, setShowPassword] = useState(false);
+  const { isAuthenticated, isLoading } = useSelector((state) => state.user);
+  const navigate = useNavigate()
+  const location = useLocation(); // Use useLocation hook to access location
+  const redirect = new URLSearchParams(location.search).get('redirect');
+  console.log(redirect,"redirect");
+
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
 
+  useEffect(() => {
+    console.log(redirect,"redirect");
+    if (isAuthenticated) {
+      if (redirect) {
+        navigate(`/${redirect}`);
+      } else {
+        navigate('/');
+      }
+    }
+  }, [isAuthenticated, navigate, redirect]);
+
   const handleLogin = (values) => {
     const {email,password} = values
-    console.log("values:", values);
-    dispatch(userLogin(email,password,navigate))
-    console.log("values2:", values);
+    dispatch(userLogin(email,password))
 
   };
+
 
   return (
     <div className="login">
@@ -102,6 +117,7 @@ const Login = () => {
                   </Form>
                 )}
               </Formik>
+              <Link to="/password/forgot_password" className="cursor-pointer text-sm text-blue-600 hover:underline mt-1 inline-block" >Forgot Password?</Link>
               <div className="socialLogin">
                 <div className="mt-[40px] relative">
                   <div className="text-center flex absolute inset-0 top-1/2">

@@ -37,7 +37,6 @@ export const addToCart = (quantity, product) => async (dispatch) => {
                 draggable: true,
                 theme: "dark",
                 transition: Bounce,
-                
             });
     } catch (error) {
         dispatch({

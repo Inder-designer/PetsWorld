@@ -63,7 +63,7 @@ const Product = ({ product }) => {
             </button>
           </div>
           <div className=" p-5 pt-3 p_Info text-left bg-[#f7f7f9] rounded-t-3xl rounded-b-xl">
-            <span className="text-sm text-gray-400">Dog</span>
+            <span className="text-sm text-gray-400">{product.category}</span>
             <h4 className="text-base text-gray-600 font-semibold p_title">
               <Link
                 to={`/${product._id}+${encodeURIComponent(product.name)}`}

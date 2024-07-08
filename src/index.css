@@ -31,3 +31,187 @@ select:focus {
   font-size: 14px;
   font-weight: 600;
 }
+
+.modalHeader button,
+.modalBody {
+  padding: 0;
+}
+
+.floatingLabel label {
+  display: -webkit-box;
+  position: absolute;
+  top: 11px;
+  left: 13px;
+  color: #94969f;
+  pointer-events: none;
+  transition: all 0.2s ease;
+  font-size: 13px;
+}
+
+.floatingLabel input, .floatingLabel  .paymentInput {
+  width: 100%;
+  font-size: 14px;
+  padding: 12px;
+  color: #282c3f;
+  border: 1px solid #d4d5d9;
+  background-color: transparent;
+  font-weight: 400;
+  border-radius: 4px;
+  line-height: 14px;
+  position: relative;
+}
+
+.floatingLabel.disabled input {
+  border: none;
+  background: #f2f2f2;
+}
+
+.floatingLabel input::placeholder {
+  color: transparent;
+}
+
+.floatingLabel input:focus~label,
+.floatingLabel input:not(:placeholder-shown)~label {
+  top: -8px;
+  background: #fff;
+  padding: 0 4px;
+  left: 9px;
+  color: #94969f;
+  /* Change color on focus */
+}
+
+.floatingLabel.disabled input:not(:placeholder-shown)~label {
+  display: none;
+}
+
+.floatingLabel input:focus {
+  border-color: #282c3f;
+}
+
+.radioLabel span {
+  border: 1px solid #282c3f;
+  font-size: 12px;
+  margin-right: 16px;
+  padding: 4px 16px;
+  border-radius: 20px;
+  display: inline-block;
+  cursor: pointer;
+  transition: border-color 0.3s ease;
+}
+
+.radioLabel input {
+  display: none;
+}
+
+.radioLabel input:checked+span {
+  font-weight: 700;
+  border-color: #ff3e6c;
+  /* Change this to the desired active color */
+  color: #ff3e6c;
+}
+
+.checkboxLabel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  text-transform: capitalize;
+  color: #282c3f;
+}
+
+.checkboxLabel .checkbox {
+  border: 2px solid #494b54;
+  border-radius: 4px;
+  padding: 0;
+  position: relative;
+  width: 16px;
+  height: 16px;
+}
+
+.checkboxLabel input[type="checkbox"] {
+  display: none;
+}
+
+.checkboxLabel input[type="checkbox"]:checked+.checkbox {
+  border-color: #ff3e6c;
+  /* Change this to the desired active color */
+}
+
+.checkboxLabel input[type="checkbox"]:checked+.checkbox svg {
+  display: inline !important;
+  /* Change this to the desired active color */
+}
+
+.css-10mg1vw-MuiStepper-root {
+  max-width: 520px;
+  margin: auto;
+}
+.css-10mg1vw-MuiStepper-root .css-vnkopk-MuiStepLabel-iconContainer{
+  display:  none;
+}
+.css-10mg1vw-MuiStepper-root .css-zpcwqm-MuiStepConnector-root {
+  left: calc(-50% + 26px);
+  right: calc(50% + 20px);
+  width: 60px;
+  top: 8px; 
+}
+.css-zpcwqm-MuiStepConnector-root .css-z7uhs0-MuiStepConnector-line{
+  border-top-style: dashed;
+}
+.css-1vyamtt-MuiStepLabel-labelContainer.MuiStepLabel-alternativeLabel {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  width: fit-content;
+}
+.css-ascpo7-MuiStepLabel-root{
+  width: fit-content;
+}
+.css-1hv8oq8-MuiStepLabel-label{
+  margin-top: 0 !important;
+  padding-bottom: 4px;
+  border-bottom: 2px solid white;
+}
+.css-1hv8oq8-MuiStepLabel-label p{
+  font-weight: 600 !important;
+  font-size: 12px !important;
+
+}
+.css-1hv8oq8-MuiStepLabel-label.Mui-active {
+  color: #ff3e6c !important;
+  padding-bottom: 4px;
+  border-bottom: 2px solid #ff3e6c;
+}
+.css-1hv8oq8-MuiStepLabel-label.Mui-completed{
+  color: rgba(0, 0, 0, 0.6) !important;
+}
+.MuiStepConnector-root.MuiStepConnector-horizontal.MuiStepConnector-alternativeLabel.Mui-completed.css-zpcwqm-MuiStepConnector-root{
+
+}
+
+.sortDrp > button  {
+  background: white;
+  color: #3f3f3f;
+  border: 1px solid #bebebe;
+  border-radius: 0;
+  width: 250px;
+  padding: 0 !important;
+}
+.sortDrp >   button:hover{
+  background-color: rgb(246, 246, 246) !important;
+}
+.sortDrp button span{
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+}
+.sortDrp .drpMenu{
+  left: 0px !important;
+  top: -9px !important;
+  min-width: 250px !important;
+  border-radius: 0 !important;
+  transition-duration: 0ms !important;
+}
+.css-188mx6n-MuiSlider-root{
+  
+}
