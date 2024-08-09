@@ -1,9 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 * {
-  transition: .3s !important;
+  font-family: 'Poppins', sans-serif;
 }
 
 button:focus,
@@ -48,7 +50,8 @@ select:focus {
   font-size: 13px;
 }
 
-.floatingLabel input, .floatingLabel  .paymentInput {
+.floatingLabel input,
+.floatingLabel .paymentInput {
   width: 100%;
   font-size: 14px;
   padding: 12px;
@@ -146,50 +149,58 @@ select:focus {
   max-width: 520px;
   margin: auto;
 }
-.css-10mg1vw-MuiStepper-root .css-vnkopk-MuiStepLabel-iconContainer{
-  display:  none;
+
+.css-10mg1vw-MuiStepper-root .css-vnkopk-MuiStepLabel-iconContainer {
+  display: none;
 }
+
 .css-10mg1vw-MuiStepper-root .css-zpcwqm-MuiStepConnector-root {
   left: calc(-50% + 26px);
   right: calc(50% + 20px);
   width: 60px;
-  top: 8px; 
+  top: 8px;
 }
-.css-zpcwqm-MuiStepConnector-root .css-z7uhs0-MuiStepConnector-line{
+
+.css-zpcwqm-MuiStepConnector-root .css-z7uhs0-MuiStepConnector-line {
   border-top-style: dashed;
 }
+
 .css-1vyamtt-MuiStepLabel-labelContainer.MuiStepLabel-alternativeLabel {
   text-align: center;
   display: flex;
   justify-content: center;
   width: fit-content;
 }
-.css-ascpo7-MuiStepLabel-root{
+
+.css-ascpo7-MuiStepLabel-root {
   width: fit-content;
 }
-.css-1hv8oq8-MuiStepLabel-label{
+
+.css-1hv8oq8-MuiStepLabel-label {
   margin-top: 0 !important;
   padding-bottom: 4px;
   border-bottom: 2px solid white;
 }
-.css-1hv8oq8-MuiStepLabel-label p{
+
+.css-1hv8oq8-MuiStepLabel-label p {
   font-weight: 600 !important;
   font-size: 12px !important;
 
 }
+
 .css-1hv8oq8-MuiStepLabel-label.Mui-active {
   color: #ff3e6c !important;
   padding-bottom: 4px;
   border-bottom: 2px solid #ff3e6c;
 }
-.css-1hv8oq8-MuiStepLabel-label.Mui-completed{
+
+.css-1hv8oq8-MuiStepLabel-label.Mui-completed {
   color: rgba(0, 0, 0, 0.6) !important;
 }
-.MuiStepConnector-root.MuiStepConnector-horizontal.MuiStepConnector-alternativeLabel.Mui-completed.css-zpcwqm-MuiStepConnector-root{
 
-}
+.MuiStepConnector-root.MuiStepConnector-horizontal.MuiStepConnector-alternativeLabel.Mui-completed.css-zpcwqm-MuiStepConnector-root {}
 
-.sortDrp > button  {
+.sortDrp>button {
   background: white;
   color: #3f3f3f;
   border: 1px solid #bebebe;
@@ -197,21 +208,39 @@ select:focus {
   width: 250px;
   padding: 0 !important;
 }
-.sortDrp >   button:hover{
+
+.sortDrp>button:hover {
   background-color: rgb(246, 246, 246) !important;
 }
-.sortDrp button span{
+
+.sortDrp button span {
   justify-content: space-between;
   width: 100%;
   align-items: center;
 }
-.sortDrp .drpMenu{
+
+.sortDrp .drpMenu {
   left: 0px !important;
   top: -9px !important;
   min-width: 250px !important;
   border-radius: 0 !important;
   transition-duration: 0ms !important;
 }
-.css-188mx6n-MuiSlider-root{
-  
+
+.css-188mx6n-MuiSlider-root {}
+
+.css-14mxsc7-MuiDataGrid-root .MuiDataGrid-filler {
+  height: 100% !important;
+}
+
+.css-1793420-MuiDataGrid-virtualScroller {
+  padding-bottom: 30px;
+}
+.custom-icon-foot-dog::before {
+  content: "";
+  display: inline-block;
+  width: 44px;
+  height: 44px;
+  background: url('data:image/svg+xml,<svg width="512" height="340" viewBox="0 0 512 340" fill="none" xmlns="http://www.w3.org/2000/svg"><ellipse cx="29.866" cy="105.815" rx="21.4381" ry="29.995" transform="rotate(-16.3392 29.866 105.815)" fill="%23ff3e6c"/><ellipse cx="177.011" cy="105.815" rx="21.4381" ry="29.995" transform="rotate(14.8903 177.011 105.815)" fill="%23ff3e6c"/><path d="M121 111.5C115.779 106.104 109 103 105 102C101 101 96 101.5 96 101.5C94.4546 101.784 93.7316 102.028 92.5 102.5C90.9877 103.052 90.2528 103.389 89 104C86.6667 105 84.1 106.8 80.5 110C76.9 113.2 73.3333 118.833 72 121C69.8333 123.833 66.5 129.5 65 132C63.6883 134.186 58.8103 140.608 58.5 141C57.466 142.307 51.8043 148.256 49.5 150.5C45.061 155.291 44.6766 155.916 43 158C41.1667 160.5 37 166.9 35 172.5C33 178.1 33.5 184.833 34 187.5C34.8221 191.987 35.518 194.59 37.5 199.5C38.7397 202.41 42.4127 208.426 46.5 211C50.6315 213.602 56.5 215.167 59 215.5C63.8282 215.907 66.7058 215.588 72 214.5L72.2641 214.434C77.7087 213.065 80.8363 212.279 85 211C90.462 209.169 92.5756 208.262 98.5 207.5C100.571 207.177 102.77 207.176 105 207.5C108.5 208.5 116.897 210.614 122 212.5C127.457 214.517 133.708 215.505 136 215.5C138.971 215.609 145.84 214.388 148.5 213.5C151.26 212.579 155.989 209.319 157.5 207.5C160.293 205.283 164.945 197.631 166 190.5C167.157 182.679 167 169.5 163.5 164.5C160 159.5 158.998 158.084 155 154.5C153 152.333 148.5 148 146.5 146C144.5 144 139.667 137.667 137.5 134.5L130 122.5C127.323 118.327 125.458 115.937 121 111.5Z" fill="%23ff3e6c"/><ellipse cx="70.8704" cy="56.6334" rx="23.8045" ry="33.6873" transform="rotate(-5.40236 70.8704 56.6334)" fill="%23ff3e6c"/><ellipse cx="132.752" cy="57.5813" rx="24.8405" ry="34.2234" transform="rotate(12.9288 132.752 57.5813)" fill="%23ff3e6c"/><ellipse cx="26.4203" cy="34.7344" rx="26.4203" ry="34.7344" transform="matrix(0.795887 0.605444 -0.573154 0.819448 298.051 45.1206)" fill="%23ff3e6c"/><ellipse cx="26.4443" cy="34.6985" rx="26.4443" ry="34.6985" transform="matrix(0.400972 0.91609 -0.930214 0.367018 431.867 197.258)" fill="%23ff3e6c"/><path d="M362.743 183.145C363.729 174.232 361.448 165.394 359.342 160.761C357.237 156.129 353.008 151.564 353.008 151.564C351.583 150.244 350.815 149.704 349.454 148.825C347.809 147.725 346.947 147.239 345.444 146.435C342.771 144.842 339.191 143.581 333.554 142.284C327.917 140.988 320.083 141.429 317.099 141.637C312.878 141.492 305.19 142.186 301.776 142.463C298.791 142.706 289.248 142.411 288.656 142.38C286.683 142.279 276.98 140.883 273.193 140.19C265.47 139.184 264.61 139.244 261.443 139.056C257.777 139.006 248.791 139.394 242.17 141.352C235.549 143.31 229.78 148.52 227.723 150.88C224.248 154.832 222.397 157.34 219.41 162.729C217.689 165.986 214.969 173.812 215.703 179.633C216.445 185.518 219.444 192.382 221.026 195.073C224.298 200.104 226.76 202.709 231.748 207.151L232.007 207.364C237.365 211.757 240.442 214.281 244.752 217.478C250.544 221.564 252.967 223.006 258.133 228.295C259.99 230.104 261.65 232.265 263.037 234.684C264.765 238.826 269.171 248.561 271.3 254.898C273.576 261.675 277.391 268.513 279.124 270.762C281.267 273.759 287.564 279.655 290.382 281.648C293.304 283.715 299.849 286.08 302.649 286.29C306.78 287.482 317.276 286.694 324.581 282.734C332.593 278.391 344.505 269.002 346.429 262.058C348.352 255.114 348.888 253.137 349.144 246.696C349.613 243.212 350.173 235.752 350.49 232.385C350.806 229.018 352.941 219.829 354.197 215.48L359.492 199.7C361.281 194.144 362.056 190.636 362.743 183.145Z" fill="%23ff3e6c"/><ellipse cx="29.4797" cy="38.7936" rx="29.4797" ry="38.7936" transform="matrix(0.675958 0.736941 -0.727484 0.686125 383.298 47.0828)" fill="%23ff3e6c"/><ellipse cx="30.6753" cy="39.54" rx="30.6753" ry="39.54" transform="matrix(0.43012 0.902771 -0.91619 0.400745 443.862 113.379)" fill="%23ff3e6c"/></svg>') no-repeat center center;
+  background-size: contain;
 }

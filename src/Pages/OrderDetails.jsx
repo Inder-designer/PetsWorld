@@ -3,7 +3,12 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import { getOrders } from "../actions/orderAction";
-import CurrencyFormat, { Progress, ProgressBar, dateConverter, formatDate } from "../helpers/CurrencyFormatter";
+import CurrencyFormat, {
+  Progress,
+  ProgressBar,
+  dateConverter,
+  formatDate,
+} from "../helpers/CurrencyFormatter";
 import product1 from "../Assets/Images/Product1.jpg";
 import Loading from "../components/Loading";
 
@@ -87,11 +92,16 @@ const OrderDetails = () => {
                   Items in this order
                 </p>
                 <div>
-                    <Progress progress={orderItems.orderStatus} size="sm" />
-                    <div className="mt-2 relative pb-5">
-                        <span className="text-xs absolute bottom-0 left-[-28px]">{formatDate(orderItems.createdAt)}</span>
-                        <span className="text-xs absolute bottom-0 right-[28px]">{orderItems.deliveredAt && formatDate(orderItems.deliveredAt)}</span>
-                    </div>
+                  <Progress progress={orderItems.orderStatus} size="sm" />
+                  <div className="mt-2 relative pb-5">
+                    <span className="text-xs absolute bottom-0 left-[-28px]">
+                      {formatDate(orderItems.createdAt)}
+                    </span>
+                    <span className="text-xs absolute bottom-0 right-[28px]">
+                      {orderItems.deliveredAt &&
+                        formatDate(orderItems.deliveredAt)}
+                    </span>
+                  </div>
                 </div>
               </div>
               <div className=" mt-4">
@@ -124,9 +134,7 @@ const OrderDetails = () => {
                       </p>
                       <div className=" flex gap-3 items-end">
                         <p className="text-sm text-gray-600 font-medium mt-1">
-                          {CurrencyFormat(
-                            product.discountPrice
-                          )}
+                          {CurrencyFormat(product.discountPrice)}
                         </p>
                         <del className="text-xs  text-gray-600 font-normal mt-1">
                           {CurrencyFormat(product.price)}
@@ -137,17 +145,35 @@ const OrderDetails = () => {
                 ))}
               </div>
               <div className="mt-5">
-                <p className="text-base font-semibold text-600 flex justify-between">
+                <p className="text-sm font-medium mb-0.5 text-gray-600 text-600 flex justify-between">
+                  Item(s) Subtotal:{" "}
+                  <span>{CurrencyFormat(orderItems.subTotal)}</span>
+                </p>
+                {orderItems.totalDiscount > 0 && (
+                  <p className="text-sm font-medium mb-0.5 text-gray-600 text-600 flex justify-between">
+                    Item(s) Discount{" "}
+                    <span>{CurrencyFormat(orderItems.totalDiscount)}</span>
+                  </p>
+                )}
+                {orderItems.shippingPrice > 0 && (
+                  <p className="text-sm font-medium mb-0.5 text-gray-600 text-600 flex justify-between">
+                    Delivery Charges{" "}
+                    <span>{CurrencyFormat(orderItems.shippingPrice)}</span>
+                  </p>
+                )}
+                <p className="text-lg pt-2 border-t font-semibold mt-2.5 text-600 flex justify-between">
                   Total Order Price{" "}
                   <span>{CurrencyFormat(orderItems.totalPrice)}</span>
                 </p>
-                <p className="text-sm text-gray-400">
-                  You saved{" "}
-                  <span className="text-[#318c72] font-medium">
-                    {CurrencyFormat(orderItems.totalDiscount)}
-                  </span>{" "}
-                  on this order
-                </p>
+                {orderItems.totalDiscount > 0 && (
+                  <p className="text-sm text-gray-400">
+                    You saved{" "}
+                    <span className="text-[#318c72] font-medium">
+                      {CurrencyFormat(orderItems.totalDiscount)}
+                    </span>{" "}
+                    on this order
+                  </p>
+                )}
               </div>
             </div>
           </div>

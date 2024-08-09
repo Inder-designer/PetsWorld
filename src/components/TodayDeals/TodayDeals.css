@@ -1,0 +1,28 @@
+.todayDeals .box .option {
+    opacity: 0;
+    height: 0%;
+    overflow: hidden;
+}
+
+.todayDeals .box:hover .option {
+    animation: fade 500ms ease-in-out;
+    opacity: 1;
+    height: 100%;
+}
+
+@keyframes fade {
+    0% {
+        opacity: 0;
+        height: 0%;
+    }
+
+    80% {
+        opacity: 1;
+        height: 30%;
+    }
+
+    100% {
+        opacity: 1;
+        height: 100%;
+    }
+}

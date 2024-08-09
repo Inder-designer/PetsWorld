@@ -19,6 +19,7 @@ import Product from "../components/product/Product";
 import { toast } from "react-toastify";
 import { addToCart, getCartItems } from "../actions/cartAction";
 import Loading from "../components/Loading";
+import { Rating } from "@mui/material";
 
 const ProductDetail = () => {
   const { productId } = useParams();
@@ -123,7 +124,8 @@ const ProductDetail = () => {
                     <span className="font-bold text-gray-700">
                       {product.ratings}
                     </span>
-                    <ReactStars {...options} />
+                    {/* <ReactStars {...options} /> */}
+                    <Rating name="half-rating-read" size="small" defaultValue={product.ratings} precision={0.5} readOnly />
                   </div>
 
                   <span className="text-gray-500">

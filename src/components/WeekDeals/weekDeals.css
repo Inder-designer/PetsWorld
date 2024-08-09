@@ -1,0 +1,3 @@
+.weeklyDeals .box_outer:hover .boxBg{
+    transform: translateX(0);
+}

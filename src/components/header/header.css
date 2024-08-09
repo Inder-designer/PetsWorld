@@ -1,0 +1,17 @@
+.noItems .box{
+    width: 180px;
+    display: block;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.noItems .box .level1 a{
+    color: #6b7280;
+    font-size: 12px;
+    margin-bottom: 10px;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+.noItems .box .level1 a:hover{
+    color: #111827;
+    margin-left: 4px;
+}

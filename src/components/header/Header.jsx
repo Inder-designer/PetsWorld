@@ -13,16 +13,16 @@ import { userLogout } from "../../actions/userAction";
 import { getCartItems } from "../../actions/cartAction";
 import { getFilterProduct, getProduct } from "../../actions/productAction";
 import { useNavigate } from "react-router-dom";
+import NavMenu from "./NavMenu";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const dispatch = useDispatch();
   const { cart, isLoading } = useSelector((state) => state.cartItems);
-  const { isAuthenticated } = useSelector((state) => state.user);
+  const { isAuthenticated, user } = useSelector((state) => state.user);
   const [searchValue, setSearchValue] = useState();
   const [searchActive, setSearchActive] = useState(false);
   const navigate = useNavigate();
-  // console.log(cart,"cart");
 
   const handleMouseEnter = () => {
     setIsOpen(true);
@@ -56,7 +56,7 @@ const Header = () => {
       <header className="bg-white border-b">
         <div className="container mx-auto">
           <nav
-            className="flex items-center justify-between px-4"
+            className="flex items-center justify-between px-4 relative"
             aria-label="Global"
           >
             <div className="flex">
@@ -69,40 +69,7 @@ const Header = () => {
                 />
               </Link>
             </div>
-            <div className=" menu">
-              <ul className="flex items-center">
-                <li className="py-6 px-3 text-sm uppercase font-semibold ">
-                  <a href="" className="flex items-center text-gray-800">
-                    Dogs <KeyboardArrowDown className="!text-lg" />
-                  </a>
-                </li>
-                <li className="py-6 px-3 text-sm uppercase font-semibold ">
-                  <a href="" className="flex items-center text-gray-800">
-                    Cats <KeyboardArrowDown className="!text-lg" />
-                  </a>
-                </li>
-                <li className="py-6 px-3 text-sm uppercase font-semibold ">
-                  <a href="" className="flex items-center text-gray-800">
-                    Other Pets <KeyboardArrowDown className="!text-lg" />
-                  </a>
-                </li>
-                <li className="py-6 px-3 text-sm uppercase font-semibold ">
-                  <a href="" className="flex items-center text-gray-800">
-                    Brands <KeyboardArrowDown className="!text-lg" />
-                  </a>
-                </li>
-                <li className="py-6 px-3 text-sm uppercase font-semibold ">
-                  <a href="" className="flex items-center text-gray-800">
-                    Age Groups <KeyboardArrowDown className="!text-lg" />
-                  </a>
-                </li>
-                <li className="py-6 px-3 text-sm uppercase font-semibold ">
-                  <a href="" className="text-gray-800">
-                    Blog
-                  </a>
-                </li>
-              </ul>
-            </div>
+            <NavMenu/>
             <div>
               <ul className="flex items-center gap-3">
                 <li>
@@ -143,7 +110,7 @@ const Header = () => {
                     <PersonOutlineOutlined className="bg-transparent !text-xl text-gray-700" />
 
                     <div
-                      className={`absolute top-full right-0 mt-1 w-[120px] z-10 text-left shadow-lg bg-white ${
+                      className={`absolute top-[90%] right-0 mt-1 w-[120px] z-10 text-left shadow-lg bg-white ${
                         isOpen ? "opacity-1 visible" : "opacity-0 invisible"
                       }`}
                     >
@@ -160,6 +127,17 @@ const Header = () => {
                             Profile
                           </Link>
                         </li>
+                        {user?.user?.role === 'admin' &&
+                        <li>
+                          <Link
+                            className="px-4 py-2 w-full inline-block hover:bg-gray-50"
+                            to="/admin/dashboard"
+                          >
+                            Dashboard
+                          </Link>
+                        </li>
+
+                        }
                         <Link
                           to={
                             !isAuthenticated

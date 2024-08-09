@@ -1,0 +1,32 @@
+.cate .box .box_inner:before {
+    content: "";
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    border: 2px dashed #ff3e6c;
+    border-radius: 50%;
+    position: absolute;
+    transition: opacity .3s linear;
+    animation: circleR 10s linear infinite;
+    opacity: 0;
+
+}
+
+.cate .box:hover .box_inner:before {
+    opacity: .6;
+}
+.cate .box:hover p{
+    color: #ff3e6c;
+}
+
+@keyframes circleR {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(180deg);
+    }
+}

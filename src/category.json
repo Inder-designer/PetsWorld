@@ -1,0 +1,268 @@
+{
+  "menuItems": [
+    {
+      "label": "dogs",
+      "submenus": [
+        {
+          "label": "Food",
+          "items": ["Dry Food", "Wet Food", "Puppy Food", "Fresh Food"]
+        },
+        {
+          "label": "Treats",
+          "items": [
+            "Sticks",
+            "Bones",
+            "Biscuits",
+            "Dental Treats",
+            "Spiral Treats",
+            "Training Treats",
+            "Sausages"
+          ]
+        },
+        {
+          "label": "Toys",
+          "items": [
+            "Puppy Chew Toys",
+            "Soft Toys",
+            "Ball Toys",
+            "Bone Toys",
+            "Rope & Pull Toys",
+            "Interactive Toys",
+            "Other Toys"
+          ]
+        },
+        {
+          "label": "Bowls & Feeders",
+          "items": [
+            "Steel Bowls",
+            "Melamine Bowls",
+            "Plastic Bowls",
+            "Adjustable Bowls",
+            "Double Bowls",
+            "Water Bottles"
+          ]
+        },
+        {
+          "label": "Grooming",
+          "items": [
+            "Shampoos & Conditioners",
+            "Wet Tissues",
+            "Brushes & Combs",
+            "Nail Cutters & Hair Trimmers",
+            "Paw Care",
+            "Deo's & Perfumes",
+            "Hair Care"
+          ]
+        },
+        {
+          "label": "Clothing",
+          "items": [
+            "T Shirts & Shirts",
+            "Winter Jackets & Sweaters",
+            "Raincoats & Shoes",
+            "Bows & Bandana",
+            "Premium Collection"
+          ]
+        },
+        {
+          "label": "Leashes, Collars & Harness",
+          "items": [
+            "Leash & Harness",
+            "Leash & Collars",
+            "Rope Leashes",
+            "Collars",
+            "Harness"
+          ]
+        },
+        {
+          "label": "Cages & Carriers",
+          "items": ["Steel Cages", "Fiber Cages", "IATA Cages", "Carry Bags"]
+        },
+        {
+          "label": "Supplements",
+          "items": [
+            "Vitamins & Calcium",
+            "Hair Supplements",
+            "Joints",
+            "Liver Supplement & Digestion"
+          ]
+        },
+        {
+          "label": "Health & Hygiene",
+          "items": [
+            "Training pads & Diapers",
+            "Wipes",
+            "Puppy Training Products",
+            "Towels",
+            "Bathing Gloves & Hair Removers",
+            "Paw Cleaners",
+            "Dental Care",
+            "Scoopers",
+            "Ear & Eye Wipes"
+          ]
+        },
+        {
+          "label": "Bedding",
+          "items": [
+            "Beds",
+            "Mattresses",
+            "Huts",
+            "Cot Beds",
+            "Blankets",
+            "Cooling Mats",
+            "Premium Collection"
+          ]
+        }
+      ]
+    },
+    {
+      "label": "cats",
+      "submenus": [
+        {
+          "label": "Food",
+          "items": ["Dry", "Wet", "Kitten Food"]
+        },
+        {
+          "label": "Treats",
+          "items": [
+            "Creamy Treats",
+            "Chicken Treats",
+            "Fish Treats",
+            "Cat Biscuits"
+          ]
+        },
+        {
+          "label": "Toys",
+          "items": [
+            "Teasing Toys",
+            "Catnip Toys",
+            "Soft Toys",
+            "Interactive Toys",
+            "Cat Trees",
+            "Scratchers",
+            "Other Toys"
+          ]
+        },
+        {
+          "label": "Bowls & Feeders",
+          "items": [
+            "Steel Bowls",
+            "Melamine Bowls",
+            "Plastic Bowls",
+            "Double Bowls",
+            "Water Bottles & Fountains"
+          ]
+        },
+        {
+          "label": "Litter & Accessories",
+          "items": [
+            "Litters",
+            "Deodorizers & Scoopers",
+            "Litter Boxes",
+            "Premium Cat Litter"
+          ]
+        },
+        {
+          "label": "Grooming",
+          "items": [
+            "Shampoos & Conditioners",
+            "Wet Tissues",
+            "Brushes & Combs",
+            "Nail Cutters & Hair Trimmers",
+            "Paw Care",
+            "Deo's & Perfumes",
+            "Hair Care"
+          ]
+        },
+        {
+          "label": "Clothing",
+          "items": [
+            "T Shirts & Shirts",
+            "Winter Jackets & Sweaters",
+            "Bows & Bandana",
+            "Premium Collection"
+          ]
+        },
+        {
+          "label": "Leashes, Collars & Harness",
+          "items": ["Leash & Harness", "Leash & Collars", "Collars", "Harness"]
+        },
+        {
+          "label": "Cages & Carriers",
+          "items": ["Steel Cages", "Fiber Cages", "IATA Cages", "Carry Bags"]
+        },
+        {
+          "label": "Health & Hygiene",
+          "items": [
+            "Training pads & Diapers",
+            "Wipes",
+            "Towels",
+            "Bathing Gloves & Hair Removers",
+            "Paw Cleaners",
+            "Dental Care",
+            "Scoopers"
+          ]
+        },
+        {
+          "label": "Bedding",
+          "items": [
+            "Beds",
+            "Mattresses",
+            "Cat House & Huts",
+            "Blankets",
+            "Premium Collection"
+          ]
+        }
+      ]
+    },
+    {
+      "label": "Other Pets",
+      "submenus": [
+        {
+          "label": "Food",
+          "items": [
+            "Bird Food",
+            "Fish & Turtle Food",
+            "Reptile Food",
+            "Rabbit Food",
+            "Hamster & Guinea Pig"
+          ]
+        },
+        {
+          "label": "Treats",
+          "items": ["Calcium Treats", "Hays", "Smackers"]
+        },
+        {
+          "label": "Cages, Carriers & Toys",
+          "items": ["Bird Cages", "Toys"]
+        },
+        {
+          "label": "Health & Hygiene & Supplements",
+          "items": ["Vitamins & Calcium", "Wood Shaving", "Wipes"]
+        }
+      ]
+    },
+    {
+      "label": "Brands",
+      "submenus": [
+        {
+          "label": "Pet Supplies",
+          "items": ["Brand A", "Brand B", "Brand C", "Brand D"]
+        },
+        {
+          "label": "Pet Accessories",
+          "items": ["Brand X", "Brand Y", "Brand Z"]
+        }
+      ]
+    },
+    {
+      "label": "Age Groups",
+      "submenus": [
+        { "label": "Puppies" },
+        { "label": "Kittens" },
+        { "label": "Adult Dogs" },
+        { "label": "Adult Cats" }
+      ]
+    }
+  ]
+}

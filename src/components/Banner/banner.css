@@ -1,0 +1,16 @@
+.animate{
+    --animate-delay: 500ms !important;
+}
+:root {
+    /* --animate-delay: 600ms !important; */
+  }
+  .bigImg{
+    --animate-delay: 900ms !important;
+  }
+  .sliderOuter .SlideBtn{
+    opacity: 0;
+    transition: .3s ease-in-out;
+  }
+  .sliderOuter:hover .SlideBtn{
+    opacity: 1;
+  }

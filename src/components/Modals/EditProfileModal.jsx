@@ -71,6 +71,7 @@ const EditProfileModal = () => {
     formData.append("email", email);
 
     if (avatarPrv !== userDetails.avatar.url) {
+      console.log(avatarPrv);
       formData.append("avatar", avatarPrv);
     }
     console.log(values, "formData");

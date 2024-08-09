@@ -32,7 +32,7 @@ export const getProductDetail = (id) => async (dispatch) => {
 }
 
 // Get Filter Product
-export const getFilterProduct = (value = "", price = [0, 30000], category, ratings = 0) => async (dispatch) => {
+export const getSearchProduct = (value = "", price = [0, 30000], category, ratings = 0) => async (dispatch) => {
     try {
         dispatch({ type: FILTER_PRODUCT_REQUESTS });
 
@@ -46,6 +46,29 @@ export const getFilterProduct = (value = "", price = [0, 30000], category, ratin
         }
 
         const { data } = await axios.get(link)
+        dispatch({ type: FILTER_PRODUCT_SUCCESS, payload: data });
+    } catch (error) {
+        dispatch({
+            type: FILTER_PRODUCT_FAIL, payload: error.response && error.response.data.message ? error
+                .response.data.message : error.message
+        });
+    }
+}
+// Get Filter Product
+export const getFilterProduct = (url) => async (dispatch) => {
+    try {
+        dispatch({ type: FILTER_PRODUCT_REQUESTS });
+
+        // let link = `${API_URL}/products?keyword=${value}&price[gte]=${price[0]}&ratings[gte]=${ratings}`;
+
+        // if (price[1] !== 30000) {
+        //     link += `&price[lte]=${price[1]}`;
+        // }
+        // if (category) {
+        //     link = `${API_URL}/products?keyword=${value}&price[gte]=${price[0]}&category=${category}&ratings[gte]=${ratings}`
+        // }
+
+        const { data } = await axios.get(API_URL+'/products/filtered/'+url)
         dispatch({ type: FILTER_PRODUCT_SUCCESS, payload: data });
     } catch (error) {
         dispatch({

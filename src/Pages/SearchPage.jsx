@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Product from "../components/product/Product";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
-import { getFilterProduct, getProduct } from "../actions/productAction";
+import { getFilterProduct, getProduct, getSearchProduct } from "../actions/productAction";
 import { Slider } from "@mui/material";
 import CurrencyFormat from "../helpers/CurrencyFormatter";
 import { Dropdown } from "flowbite-react";
@@ -36,7 +36,7 @@ const SearchPage = () => {
   };
 
   useEffect(() => {
-    dispatch(getFilterProduct(keywoard, value, category, ratings));
+    dispatch(getSearchProduct(keywoard, value, category, ratings));
     navigate(
       `/search?q=${keywoard}&price[gte]=${value[0]}&price[lte]=${value[1]}`
     );

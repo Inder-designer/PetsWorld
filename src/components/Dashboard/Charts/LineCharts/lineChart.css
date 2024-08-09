@@ -1,0 +1,4 @@
+.lineChart .recharts-cartesian-grid-vertical,
+.lineChart .recharts-cartesian-axis-tick-line{
+    display: none;
+}

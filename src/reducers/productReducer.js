@@ -74,7 +74,7 @@ export const filterProductReducer = (state = initialStateFilter, action) => {
                 ...state,
                 isLoading: false,
                 products: action.payload.products,
-                productsCount: action.payload.filteredProductsCount
+                productsCount: action.payload.filteredProductsCount || action.payload.productsCount
             }
         case FILTER_PRODUCT_FAIL:
             return {

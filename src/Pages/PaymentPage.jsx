@@ -37,8 +37,9 @@ const PaymentPage = () => {
       shippingInfo: orderDetails.shippingAddress,
       orderItems: orderDetails.cartItems,
       subTotal: orderDetails.subTotal,
-      totalDiscount: orderDetails.subTotal - orderDetails.total,
+      totalDiscount: orderDetails.totalDiscount,
       totalPrice: orderDetails.total,
+      shippingPrice: orderDetails.deliveryCharges,
       paymentMethod: paymentMethod,
       paymentInfo: {},
     };
@@ -204,35 +205,47 @@ const PaymentPage = () => {
                   <span>{CurrencyFormat(orderDetails?.subTotal || 0)}</span>
                 </div>
                 {/* dicount */}
-                {orderDetails?.subTotal - orderDetails?.total > 0 && (
+                {orderDetails?.totalDiscount > 0 && (
                   <div className="text-gray-600 font-semibold flex justify-between my-4 items-start">
                     <p className="">Discount</p>
                     <span className="text-[#388e3c]">
                       <Remove className="!text-sm" />
                       {CurrencyFormat(
-                        orderDetails?.subTotal - orderDetails?.total || 0
+                        orderDetails?.totalDiscount || 0
                       )}
                     </span>
                   </div>
                 )}
-                {/* <div className="flex justify-between my-4 items-start">
+                <div className=" my-4 ">
+                  <div className="flex justify-between items-start">
                     <p className="text-gray-600 font-medium">
                       Delivery Charges
                     </p>
-                    <span>price</span>
-                  </div> */}
+                    {orderDetails?.deliveryCharges === 40 ? (
+                      <span>40</span>
+                    ) : (
+                      <span className="flex items-center gap-1.5">
+                        <span className="text-[#388e3c] font-medium">Free</span>
+                        <del className="text-gray-600">40</del>
+                      </span>
+                    )}
+                  </div>
+                  <p className="text-xs text-gray-500">
+                    Free Delivery on order above 499.00
+                  </p>
+                </div>
                 <div className="border-[#e0e0e0] border-t  border-dashed">
                   <div className="flex justify-between my-4 items-start text-xl font-semibold ">
                     <p className="text-gray-800 ">Total Amount</p>
                     <span>{CurrencyFormat(orderDetails?.total)}</span>
                   </div>
                 </div>
-                {orderDetails?.subTotal - orderDetails?.total > 0 && (
+                {orderDetails?.totalDiscount > 0 && (
                   <div className="border-[#e0e0e0] border-t  border-dashed py-3 text-[#388e3c] font-medium">
                     <p>
                       You will save{" "}
                       {CurrencyFormat(
-                        orderDetails?.subTotal - orderDetails?.total,
+                        orderDetails?.totalDiscount,
                         0 || 0
                       )}{" "}
                       on this order

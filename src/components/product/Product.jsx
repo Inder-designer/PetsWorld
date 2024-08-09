@@ -58,7 +58,7 @@ const Product = ({ product }) => {
             ) : (
               ""
             )}
-            <button className="wishlist absolute top-5 right-5 w-8 h-8 rounded-full border flex justify-center items-center hover:bg-green-500 text-gray-600 hover:text-white">
+            <button className="wishlist absolute top-5 right-5 w-8 h-8 rounded-full flex justify-center items-center bg-white hover:bg-green-500 text-gray-600 hover:text-white">
               <FavoriteBorderOutlined className="!text-lg" />
             </button>
           </div>

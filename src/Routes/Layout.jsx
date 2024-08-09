@@ -22,8 +22,23 @@ import OrderSuccess from "../components/OrderSuccess";
 import OrderDetails from "../Pages/OrderDetails";
 import Orders from "../Pages/Orders";
 import SearchPage from "../Pages/SearchPage.jsx";
+import ShopPage from "../Pages/ShopPage.jsx";
 import ForgotPassword from "../components/Auth/ForgotPassword.jsx";
 import ResetPswd from "../components/Auth/ResetPswd.jsx";
+import ErrorPage from "../Pages/ErrorPage.jsx";
+import DashboardMain from "./DashboardMain.jsx";
+import Dashboard from "../Pages/Dashboard/Dashboard.jsx";
+import Users from "../Pages/Dashboard/Users.jsx";
+import Products from "../Pages/Dashboard/Products.jsx";
+import AdminOrders from "../Pages/Dashboard/Orders.jsx";
+import PrivateRoute from "./PrivateRoute.jsx";
+import Categories from "../Pages/Dashboard/Categories.jsx";
+import SubCategories from "../Pages/Dashboard/SubCategories.jsx";
+import Attributes from "../Pages/Dashboard/Attributes.jsx";
+import Sales from "../Pages/Dashboard/Sales.jsx";
+import NewProduct from "../Pages/Dashboard/NewProduct.jsx";
+import EditProduct from "../Pages/Dashboard/EditProduct.jsx";
+import AdminOrderDetails from "../Pages/Dashboard/OrderDetails.jsx";
 
 const Layout = () => {
   const { isAuthenticated, isLoading } = useSelector((state) => state.user);
@@ -47,6 +62,7 @@ const Layout = () => {
     {
       path: "/",
       element: <Main />,
+      errorElement: <ErrorPage />,
       children: [
         {
           path: "/",
@@ -57,14 +73,18 @@ const Layout = () => {
           element: <ProductDetail />,
         },
         {
+          path: "/shop/:categoryName",
+          element: <ShopPage />,
+        },
+        {
           path: "/search",
-          element: <SearchPage/>,
+          element: <SearchPage />,
         },
         {
           path: "/profile",
           element: (
             <ProtectedRoute>
-            <Profile />
+              <Profile />
             </ProtectedRoute>
           ),
         },
@@ -131,6 +151,60 @@ const Layout = () => {
     {
       path: "/password/reset/:token",
       element: <ResetPswd />,
+    },
+    {
+      path: "/admin",
+      element: (
+        <PrivateRoute>
+          <DashboardMain />
+        </PrivateRoute>
+      ),
+      children: [
+        {
+          path: "dashboard",
+          element: <Dashboard />,
+        },
+        {
+          path: "sales",
+          element: <Sales />,
+        },
+        {
+          path: "orders",
+          element: <AdminOrders />,
+        },
+        {
+          path: "order/:id",
+          element: <AdminOrderDetails />,
+        },
+        {
+          path: "products",
+          element: <Products />,
+        },
+        {
+          path: "product/create",
+          element: <NewProduct />,
+        },
+        {
+          path: "product/:id",
+          element: <EditProduct />,
+        },
+        {
+          path: "manage-users",
+          element: <Users />,
+        },
+        {
+          path: "categories",
+          element: <Categories />,
+        },
+        {
+          path: "sub-categories",
+          element: <SubCategories />,
+        },
+        {
+          path: "attributes",
+          element: <Attributes />,
+        },
+      ],
     },
   ]);
   return <RouterProvider router={router} />;

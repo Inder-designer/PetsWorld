@@ -282,35 +282,47 @@ const Checkout = () => {
                 </div>
                 {/* dicount */}
 
-                {cartDetails?.subTotal - cartDetails?.total > 0 && (
+                {cartDetails?.totalDiscount > 0 && (
                   <div className="text-gray-600 font-semibold flex justify-between my-4 items-start">
                     <p className="">Discount</p>
                     <span className="text-[#388e3c]">
                       <Remove className="!text-sm" />
                       {CurrencyFormat(
-                        cartDetails?.subTotal - cartDetails?.total || 0
+                        cartDetails?.totalDiscount || 0
                       )}
                     </span>
                   </div>
                 )}
-                {/* <div className="flex justify-between my-4 items-start">
+                <div className=" my-4 ">
+                  <div className="flex justify-between items-start">
                     <p className="text-gray-600 font-medium">
                       Delivery Charges
                     </p>
-                    <span>price</span>
-                  </div> */}
+                    {cartDetails?.deliveryCharges === 40 ? (
+                      <span>40</span>
+                    ) : (
+                      <span className="flex items-center gap-1.5">
+                        <span className="text-[#388e3c] font-medium">Free</span>
+                        <del className="text-gray-600">40</del>
+                      </span>
+                    )}
+                  </div>
+                  <p className="text-xs text-gray-500">
+                    Free Delivery on order above 499.00
+                  </p>
+                </div>
                 <div className="border-[#e0e0e0] border-t  border-dashed">
                   <div className="flex justify-between my-4 items-start text-xl font-semibold ">
                     <p className="text-gray-800 ">Total Amount</p>
                     <span>{CurrencyFormat(cartDetails?.total)}</span>
                   </div>
                 </div>
-                {cartDetails?.subTotal - cartDetails?.total > 0 && (
+                {cartDetails?.totalDiscount > 0 && (
                   <div className="border-[#e0e0e0] border-t  border-dashed py-3 text-[#388e3c] font-medium">
                     <p>
                       You will save{" "}
                       {CurrencyFormat(
-                        cartDetails?.subTotal - cartDetails?.total,
+                        cartDetails?.totalDiscount,
                         0 || 0
                       )}{" "}
                       on this order

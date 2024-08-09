@@ -5,3 +5,9 @@ export const CONFIG = {
     },
     withCredentials: true
 }
+export const CONFIG_MULTI = {
+    headers: {
+        'Content-Type': 'multipart/form-data'
+    },
+    withCredentials: true
+}
