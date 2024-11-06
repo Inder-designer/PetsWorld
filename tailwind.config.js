@@ -1,13 +1,13 @@
-import flowbite from "flowbite-react/tailwind";
+const flowbite = require("flowbite-react/tailwind");
 
 /** @type {import('tailwindcss').Config} */
-export default {
+module.exports = {
   content: [
     "./index.html",
     "./src/**/*.{js,jsx}",
     "./node_modules/flowbite/**/*.{js,jsx}",
     "./node_modules/flowbite-react/**/*.{js,jsx}",
-    ...flowbite.content,
+    ...(Array.isArray(flowbite.content) ? flowbite.content : []), // ensure it's iterable
   ],
   theme: {
     screens: {
@@ -20,7 +20,7 @@ export default {
     extend: {},
   },
   plugins: [
-    require('flowbite/plugin'),
-    ...flowbite.plugins,
+    require("flowbite/plugin"),
+    ...(Array.isArray(flowbite.plugins) ? flowbite.plugins : []), // ensure it's iterable
   ],
 };
