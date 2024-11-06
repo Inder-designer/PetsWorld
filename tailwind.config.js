@@ -1,11 +1,13 @@
 import flowbite from "flowbite-react/tailwind";
+
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
-    "./index.html", "./src/**/*.{js,jsx}",
+    "./index.html",
+    "./src/**/*.{js,jsx}",
     "./node_modules/flowbite/**/*.{js,jsx}",
     "./node_modules/flowbite-react/**/*.{js,jsx}",
-    flowbite.content(),
+    ...flowbite.content,
   ],
   theme: {
     screens: {
@@ -19,6 +21,6 @@ export default {
   },
   plugins: [
     require('flowbite/plugin'),
-    flowbite.plugin(),
+    ...flowbite.plugins,
   ],
 };
