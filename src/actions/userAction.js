@@ -53,6 +53,7 @@ export const loadUser = () => async (dispatch) => {
     try {
         dispatch({ type: LOAD_USER_REQUEST })
         const config = getConfig();
+        console.log(config);
         const { data } = await axios.get(`${API_URL}/me`
             , config
         )
