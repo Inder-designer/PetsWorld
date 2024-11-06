@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import product1 from "../../Assets/Images/Product1.jpg";
 import {
   FavoriteBorderOutlined,
+  FavoriteRounded,
   Star,
   StarBorderOutlined,
 } from "@mui/icons-material";
@@ -9,15 +10,26 @@ import "./product.css";
 import CurrencyFormatter from "../../helpers/CurrencyFormatter";
 import CurrencyFormat from "../../helpers/CurrencyFormatter";
 import DiscountPrice from "../../helpers/DiscountPrice";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ReactStars from "react-rating-stars-component";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../actions/cartAction";
+import { useSelector } from "react-redux";
+import {
+  addToWishlist,
+  clearErrors,
+  getWishlist,
+  removeFromWishlist,
+} from "../../actions/wishlistAction";
+import Loading from "../Loading";
 
 const Product = ({ product }) => {
-  const dispatch = useDispatch()
-  const quantity = 1
-  // console.log(products);
+  const { isAuthenticated } = useSelector((state) => state.user);
+  const { wishlist, isLoading, error } = useSelector((state) => state.wishlist);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const quantity = 1;
+  // console.log(wishlist?.wishlist?.wishlistItems);
   const imageUrl =
     product.images && product.images.length > 0
       ? product.images[0].url
@@ -37,12 +49,45 @@ const Product = ({ product }) => {
   const totalRating = calculateTotalRating();
 
   const handleAddToCart = (id) => {
-    dispatch(addToCart(quantity, id));
+    if (!isAuthenticated) {
+      navigate("/sign-in");
+    } else {
+      dispatch(addToCart(quantity, id));
+    }
   };
 
+  const isInWishlist = (id) =>
+    wishlist?.wishlist?.wishlistItems.some((item) => item.product._id === id);
+
+  const handleAddWishlist = () => {
+    if (!isAuthenticated) {
+      navigate("/sign-in");
+    } else {
+      dispatch(addToWishlist(product._id)).then(() => {
+        dispatch(getWishlist()); // Refetch wishlist after adding
+      });
+    }
+  };
+
+  const handleRemoveWishlist = () => {
+    if (!isAuthenticated) {
+      navigate("/sign-in");
+    } else {
+      dispatch(removeFromWishlist(product._id)).then(() => {
+        dispatch(getWishlist()); // Refetch wishlist after adding
+      });
+    }
+  };
+
+  useEffect(() => {
+    if (error) {
+      dispatch(clearErrors());
+    }
+  }, [dispatch, error]);
   return (
     <>
       <div className="" key={product._id}>
+        {isLoading && <Loading />}
         <div className="relative bg-white rounded-xl product">
           <div className="relative text-center p_Thumb p-5">
             <Link
@@ -52,15 +97,29 @@ const Product = ({ product }) => {
               <img src={imageUrl} alt="" />
             </Link>
             {product.discount ? (
-              <div className="absolute top-5 left-5 bg-blue-500 text-white py-1 px-2  rounded">
-                <span className=" text-white text-sm">-{product.discount}%</span>
+              <div className="absolute top-3 left-3 bg-[#ff3e6c] text-white py-0.5 px-2  rounded">
+                <span className=" text-white text-sm font-semibold">
+                  -{product.discount}%
+                </span>
               </div>
             ) : (
               ""
             )}
-            <button className="wishlist absolute top-5 right-5 w-8 h-8 rounded-full flex justify-center items-center bg-white hover:bg-green-500 text-gray-600 hover:text-white">
-              <FavoriteBorderOutlined className="!text-lg" />
-            </button>
+            {isInWishlist(product._id) ? (
+              <button
+                className="wishlist absolute top-5 right-5 w-8 h-8 rounded-full flex justify-center items-center bg-white hover:bg-[#ff3e6c] text-[#ff3e6c] hover:text-white duration-300 shadow-lg "
+                onClick={handleRemoveWishlist}
+              >
+                <FavoriteRounded className="!text-lg" />
+              </button>
+            ) : (
+              <button
+                className="wishlist absolute top-5 right-5 w-8 h-8 rounded-full flex justify-center items-center bg-white hover:bg-[#ff3e6c] text-[#ff3e6c] hover:text-white duration-300 shadow-lg "
+                onClick={handleAddWishlist}
+              >
+                <FavoriteBorderOutlined className="!text-lg" />
+              </button>
+            )}
           </div>
           <div className=" p-5 pt-3 p_Info text-left bg-[#f7f7f9] rounded-t-3xl rounded-b-xl">
             <span className="text-sm text-gray-400">{product.category}</span>
@@ -72,7 +131,7 @@ const Product = ({ product }) => {
                 {product.name}
               </Link>
             </h4>
-            {product.numOfReviews > 0 && (
+            {product.ratings > 0 && (
               <div className="flex mt-2">
                 <div className="rating flex items-center w-fit text-sm ">
                   <div className="flex items-center gap-1 border-r border-gray-400 mr-2 pr-2">
@@ -106,10 +165,11 @@ const Product = ({ product }) => {
           <div className="p_bottom left-[-0.6px] border border-white border-t-0 absolute shadow-lg rounded-b-xl p-5 bg-[#f7f7f9] text-white w-[calc(100%_+_2px)] top-[96%]">
             <div className="">
               <button
-                className="text-center uppercase inline-block w-full rounded-full text-white py-2 px-4 bg-[#ff3e6c] hover:bg-[#ff3e6bda]"
+                className={`text-center uppercase inline-block w-full rounded-full text-white py-2 px-4 bg-[#ff3e6c] hover:bg-[#ff3e6bda]`}
                 onClick={() => handleAddToCart(product._id)}
+                disabled={product.Stock < 1}
               >
-                Add to cart
+                {product.Stock < 1 ? "Out of stock" : "Add to cart"}
               </button>
             </div>
           </div>

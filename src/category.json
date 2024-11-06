@@ -1,7 +1,7 @@
 {
   "menuItems": [
     {
-      "label": "dogs",
+      "label": "dog",
       "submenus": [
         {
           "label": "Food",
@@ -116,7 +116,7 @@
       ]
     },
     {
-      "label": "cats",
+      "label": "cat",
       "submenus": [
         {
           "label": "Food",
@@ -260,8 +260,7 @@
       "submenus": [
         { "label": "Puppies" },
         { "label": "Kittens" },
-        { "label": "Adult Dogs" },
-        { "label": "Adult Cats" }
+        { "label": "Adult" }
       ]
     }
   ]

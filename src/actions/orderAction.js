@@ -1,6 +1,6 @@
 import { NEW_ORDER_FAIL, NEW_ORDER_REQUEST, NEW_ORDER_SUCCESS, GET_ORDERS_FAIL, GET_ORDERS_REQUEST, GET_ORDERS_SUCCESS } from '../constants/orderConstants'
 import axios from 'axios'
-import { API_URL, CONFIG } from "../constants/apiConstants";
+import { API_URL, getConfig } from "../constants/apiConstants";
 import { toast } from 'react-toastify';
 import { getCartItems } from './cartAction';
 
@@ -11,7 +11,8 @@ export const newOrder = (order, navigate) => async (dispatch, getState) => {
         dispatch({
             type: NEW_ORDER_REQUEST
         })
-        const { data } = await axios.post(`${API_URL}/order/new`, order, CONFIG)
+        const config = getConfig()
+        const { data } = await axios.post(`${API_URL}/order/new`, order, config)
         dispatch({
             type: NEW_ORDER_SUCCESS,
             payload: data,
@@ -38,7 +39,8 @@ export const getOrders = () => async (dispatch, getState) => {
         dispatch({
             type: GET_ORDERS_REQUEST
         })
-        const { data } = await axios.get(`${API_URL}/orders/me`, CONFIG)
+        const config = getConfig()
+        const { data } = await axios.get(`${API_URL}/orders/me`, config)
         dispatch({
             type: GET_ORDERS_SUCCESS,
             payload: data,

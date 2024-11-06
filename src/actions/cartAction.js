@@ -1,5 +1,5 @@
 import { Bounce, toast } from "react-toastify";
-import { API_URL, CONFIG } from "../constants/apiConstants";
+import { API_URL, CONFIG, getConfig } from "../constants/apiConstants";
 import { CART_ITEMS_FAIL, CART_ITEMS_SUCCESS, CART_ITEMS_REQUEST, ADD_CART_FAIL, ADD_CART_REQUEST, ADD_CART_SUCCESS, UPDATE_CART_FAIL, UPDATE_CART_REQUEST, UPDATE_CART_SUCCESS, REMOVE_CART_FAIL, REMOVE_CART_SUCCESS } from "../constants/cartConstants";
 import axios from "axios";
 import { CheckCircle, Error } from "@mui/icons-material";
@@ -8,7 +8,8 @@ import { CheckCircle, Error } from "@mui/icons-material";
 export const getCartItems = () => async (dispatch) => {
     try {
         dispatch({ type: CART_ITEMS_REQUEST });
-        const { data } = await axios.get(`${API_URL}/cart-items`, CONFIG);
+        const config = getConfig()
+        const { data } = await axios.get(`${API_URL}/cart-items`, config);
         dispatch({ type: CART_ITEMS_SUCCESS, payload: data });
     } catch (error) {
         dispatch({
@@ -21,8 +22,9 @@ export const getCartItems = () => async (dispatch) => {
 export const addToCart = (quantity, product) => async (dispatch) => {
     try {
         dispatch({ type: ADD_CART_REQUEST });
+        const config = getConfig()
         const { data } = await axios.put(`${API_URL}/cart`,
-            { quantity, product }, CONFIG
+            { quantity, product }, config
         );
         dispatch({
             type: ADD_CART_SUCCESS,
@@ -42,10 +44,10 @@ export const addToCart = (quantity, product) => async (dispatch) => {
         dispatch({
             type: ADD_CART_FAIL, payload: error.response && error.response.data.message ? error.response.data.message : error.message
         });
-        console.log(error.response.data.message);
+        console.log(error);
         toast.error(
             <div className="flex items-center">
-                <p className="text-sm w-full">You have this item in your bag with the maximum available quantity</p>
+                <p className="text-sm w-full">{error.response.data.message}</p>
             </div>
             , {
                 hideProgressBar: true,
@@ -59,8 +61,9 @@ export const addToCart = (quantity, product) => async (dispatch) => {
 export const updateCart = (quantity, cartItemId) => async (dispatch) => {
     try {
         dispatch({ type: UPDATE_CART_REQUEST });
+        const config = getConfig()
         const { data } = await axios.put(`${API_URL}/cart-item/${cartItemId}`
-            , { quantity }, CONFIG
+            , { quantity }, config
         );
         dispatch({
             type: UPDATE_CART_SUCCESS,
@@ -86,7 +89,8 @@ export const updateCart = (quantity, cartItemId) => async (dispatch) => {
 // Remove cart Item
 export const removeCartItem = (id) => async (dispatch) => {
     try {
-        const { data } = await axios.delete(`${API_URL}/cart-item/${id}`, CONFIG
+        const config = getConfig()
+        const { data } = await axios.delete(`${API_URL}/cart-item/${id}`, config
         );
         dispatch({
             type: REMOVE_CART_SUCCESS,

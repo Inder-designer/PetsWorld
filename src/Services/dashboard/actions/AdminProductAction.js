@@ -1,6 +1,6 @@
 import { CREATE_PRODUCT_REQUEST, CREATE_PRODUCT_SUCCESS, CREATE_PRODUCT_FAIL, CLEAR_ERRORS, DELETE_PRODUCT_REQUEST, DELETE_PRODUCT_SUCCESS, DELETE_PRODUCT_FAIL, UPDATE_PRODUCT_REQUEST, UPDATE_PRODUCT_SUCCESS, UPDATE_PRODUCT_FAIL } from "../constants/productConstants";
 import axios from "axios";
-import { API_URL, CONFIG, CONFIG_MULTI } from "../../../constants/apiConstants";
+import { API_URL, CONFIG, CONFIG_MULTI, getConfig } from "../../../constants/apiConstants";
 import { toast } from "react-toastify";
 
 // Create Product
@@ -8,7 +8,8 @@ export const createProduct = (product, navigate) => async (dispatch) => {
     try {
         dispatch({ type: CREATE_PRODUCT_REQUEST });
 
-        const { data } = await axios.post(`${API_URL}/admin/product/new`, product, CONFIG);
+        const config = getConfig("")
+        const { data } = await axios.post(`${API_URL}/admin/product/new`, product, config);
 
         dispatch({ type: CREATE_PRODUCT_SUCCESS, payload: data });
         toast.success(data.message)
@@ -28,7 +29,8 @@ export const getAllProducts = () => async (dispatch) => {
     try {
         dispatch({ type: CREATE_PRODUCT_REQUEST });
 
-        const { data } = await axios.get(`${API_URL}/products`, CONFIG);
+        const config = getConfig()
+        const { data } = await axios.get(`${API_URL}/products`, config);
 
         dispatch({ type: CREATE_PRODUCT_SUCCESS, payload: data });
     } catch (error) {
@@ -46,7 +48,8 @@ export const deleteProduct = (productId) => async (dispatch) => {
     try {
         dispatch({ type: DELETE_PRODUCT_REQUEST });
 
-        const { data } = await axios.delete(`${API_URL}/admin/product/${productId}`, CONFIG);
+        const config = getConfig()
+        const { data } = await axios.delete(`${API_URL}/admin/product/${productId}`, config);
 
         dispatch({ type: DELETE_PRODUCT_SUCCESS, payload: data.success });
         toast.success(data.message)
@@ -65,7 +68,8 @@ export const updateProduct = (product, id) => async (dispatch) => {
     try {
         dispatch({ type: UPDATE_PRODUCT_REQUEST });
 
-        const { data } = await axios.put(`${API_URL}/admin/product/${id}`, product, CONFIG);
+        const config = getConfig()
+        const { data } = await axios.put(`${API_URL}/admin/product/${id}`, product, config);
 
         dispatch({ type: UPDATE_PRODUCT_SUCCESS, payload: data.success });
         toast.success(data.message)

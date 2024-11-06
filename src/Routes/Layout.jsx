@@ -39,6 +39,9 @@ import Sales from "../Pages/Dashboard/Sales.jsx";
 import NewProduct from "../Pages/Dashboard/NewProduct.jsx";
 import EditProduct from "../Pages/Dashboard/EditProduct.jsx";
 import AdminOrderDetails from "../Pages/Dashboard/OrderDetails.jsx";
+import ReviewProduct from "../Pages/ReviewProduct.jsx";
+import MyAccount from '../Pages/MyAccount/MyAccount'
+import Wishlist from "../Pages/Wishlist.jsx";
 
 const Layout = () => {
   const { isAuthenticated, isLoading } = useSelector((state) => state.user);
@@ -73,6 +76,10 @@ const Layout = () => {
           element: <ProductDetail />,
         },
         {
+          path: "/shop",
+          element: <ShopPage />,
+        },
+        {
           path: "/shop/:categoryName",
           element: <ShopPage />,
         },
@@ -93,6 +100,14 @@ const Layout = () => {
           element: (
             <ProtectedRoute>
               <CartPage />
+            </ProtectedRoute>
+          ),
+        },
+        {
+          path: "/wishlist",
+          element: (
+            <ProtectedRoute>
+              <Wishlist />
             </ProtectedRoute>
           ),
         },
@@ -126,7 +141,7 @@ const Layout = () => {
           path: "/order_details",
           element: (
             <ProtectedRoute>
-              <OrderDetails />
+              <MyAccount/>
             </ProtectedRoute>
           ),
         },
@@ -134,7 +149,15 @@ const Layout = () => {
           path: "/my/orders",
           element: (
             <ProtectedRoute>
-              <Orders />
+              <MyAccount />
+            </ProtectedRoute>
+          ),
+        },
+        {
+          path: "/review/:id",
+          element: (
+            <ProtectedRoute>
+              <ReviewProduct />
             </ProtectedRoute>
           ),
         },

@@ -1,13 +1,13 @@
 import { GET_CATEGORIES_FAIL, GET_CATEGORIES_REQUEST, GET_CATEGORIES_SUCCESS, CLEAR_ERRORS, UPDATE_CATEGORY_FAIL, UPDATE_CATEGORY_REQUEST, UPDATE_CATEGORY_RESET, UPDATE_CATEGORY_SUCCESS, ADD_CATEGORY_REQUEST, ADD_CATEGORY_FAIL, ADD_CATEGORY_SUCCESS } from "../constants/categoryConstants";
 import axios from "axios";
-import { API_URL, CONFIG } from "../../../constants/apiConstants";
+import { API_URL, CONFIG, getConfig } from "../../../constants/apiConstants";
 import { toast } from "react-toastify";
 
 // Get Categories
 export const getCategories = () => async (dispatch) => {
     try {
         dispatch({ type: GET_CATEGORIES_REQUEST });
-        const { data } = await axios.get(`${API_URL}/admin/categories`, CONFIG);
+        const { data } = await axios.get(`${API_URL}/categories`);
         dispatch({ type: GET_CATEGORIES_SUCCESS, payload: data });
     } catch (error) {
         dispatch({
@@ -28,7 +28,8 @@ export const getCategories = () => async (dispatch) => {
 export const addCategory = (values, setNewCate) => async (dispatch) => {
     try {
         dispatch({ type: ADD_CATEGORY_REQUEST });
-        const { data } = await axios.put(`${API_URL}/admin/category/new`, values, CONFIG);
+        const config = getConfig()
+        const { data } = await axios.put(`${API_URL}/admin/category/new`, values, config);
         dispatch({ type: ADD_CATEGORY_SUCCESS, payload: data });
         toast.success("Category Created");
         {
@@ -61,10 +62,11 @@ export const addCategory = (values, setNewCate) => async (dispatch) => {
 export const updateCategory = (values) => async (dispatch) => {
     try {
         dispatch({ type: UPDATE_CATEGORY_REQUEST });
+        const config = getConfig()
         const { data } = await axios.put(
             `${API_URL}/admin/category`,
             values,
-            CONFIG
+            config
         );
         dispatch({ type: UPDATE_CATEGORY_SUCCESS, payload: data.success });
         toast.success(data.message);

@@ -12,36 +12,32 @@ import { userLogin } from "../../actions/userAction.js";
 import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 
 const Login = () => {
-    const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const [showPassword, setShowPassword] = useState(false);
   const { isAuthenticated, isLoading } = useSelector((state) => state.user);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const location = useLocation(); // Use useLocation hook to access location
-  const redirect = new URLSearchParams(location.search).get('redirect');
-  console.log(redirect,"redirect");
+  const redirect = new URLSearchParams(location.search).get("redirect");
+  const redirectPath = location.state?.from || "/";
+  console.log(redirectPath,"redirectPath");
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
 
   useEffect(() => {
-    console.log(redirect,"redirect");
     if (isAuthenticated) {
-      if (redirect) {
-        navigate(`/${redirect}`);
-      } else {
-        navigate('/');
-      }
+      navigate(redirectPath);
     }
-  }, [isAuthenticated, navigate, redirect]);
+  }, [isAuthenticated, navigate, redirectPath])
 
   const handleLogin = (values) => {
-    const {email,password} = values
-    dispatch(userLogin(email,password))
-
+    const { email, password } = values;
+    dispatch(userLogin(email, password));
   };
-
-
+  if (isAuthenticated) {
+    return <Navigate to={redirectPath} />; // Redirect if already authenticated
+  }
   return (
     <div className="login">
       <div className="bg-[#f9fafb] flex flex-col">
@@ -117,7 +113,12 @@ const Login = () => {
                   </Form>
                 )}
               </Formik>
-              <Link to="/password/forgot_password" className="cursor-pointer text-sm text-blue-600 hover:underline mt-1 inline-block" >Forgot Password?</Link>
+              <Link
+                to="/password/forgot_password"
+                className="cursor-pointer text-sm text-blue-600 hover:underline mt-1 inline-block"
+              >
+                Forgot Password?
+              </Link>
               <div className="socialLogin">
                 <div className="mt-[40px] relative">
                   <div className="text-center flex absolute inset-0 top-1/2">

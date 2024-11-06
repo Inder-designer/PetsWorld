@@ -8,9 +8,6 @@ import Product from "../product/Product";
 const BestSelling = ({ pet }) => {
   const dispatch = useDispatch();
   const { products, isLoading } = useSelector((state) => state.products);
-  useEffect(() => {
-    dispatch(getProduct());
-  }, [dispatch]);
   return (
     <div className="mb-[70px] bestSellingDeals">
       <div className="container mx-auto">

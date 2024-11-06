@@ -33,7 +33,7 @@ const Header = () => {
   };
 
   const HandleLogout = () => {
-    dispatch(userLogout(navigate));
+    dispatch(userLogout({ navigate }));
   };
 
   useEffect(() => {
@@ -45,7 +45,7 @@ const Header = () => {
     if (searchValue.trim()) {
       navigate(`/search?q=${searchValue}`);
       dispatch(getFilterProduct(searchValue.trim()));
-      setSearchActive(false)
+      setSearchActive(false);
     } else {
       dispatch(getProduct());
     }
@@ -60,16 +60,11 @@ const Header = () => {
             aria-label="Global"
           >
             <div className="flex">
-              <Link to="/" className="-m-1.5 p-1.5">
-                <span className="sr-only">Your Company</span>
-                <img
-                  className="h-8 w-auto"
-                  src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-                  alt=""
-                />
+              <Link to="/" className="-m-1.5 p-1.5 font-semibold text-gray-700 text-lg">
+                Pet World
               </Link>
             </div>
-            <NavMenu/>
+            <NavMenu />
             <div>
               <ul className="flex items-center gap-3">
                 <li>
@@ -81,17 +76,17 @@ const Header = () => {
                   </a>
                 </li>
                 <li>
-                  <a
+                  <Link
+                  to="/wishlist"
                     className="w-10 h-10 rounded-full bg-[#ecfbff] flex justify-center items-center"
-                    href=""
                   >
                     <FavoriteBorder className="bg-transparent !text-xl text-gray-700" />
-                  </a>
+                  </Link>
                 </li>
                 <li>
                   <Link
                     className="relative w-10 h-10 rounded-full bg-[#feefd0] flex justify-center items-center"
-                    to={!isAuthenticated ? "/sign-in?redirect=cart" : "/cart"}
+                    to="/cart"
                   >
                     <ShoppingCartOutlined className="bg-transparent !text-xl text-gray-700" />
                     {!isLoading && cart && cart.cartItems.length > 0 && (
@@ -118,32 +113,23 @@ const Header = () => {
                         <li>
                           <Link
                             className="px-4 py-2 w-full inline-block hover:bg-gray-50"
-                            to={
-                              !isAuthenticated
-                                ? "/sign-in?redirect=profile"
-                                : "/profile"
-                            }
+                            to="/profile"
                           >
                             Profile
                           </Link>
                         </li>
-                        {user?.user?.role === 'admin' &&
-                        <li>
-                          <Link
-                            className="px-4 py-2 w-full inline-block hover:bg-gray-50"
-                            to="/admin/dashboard"
-                          >
-                            Dashboard
-                          </Link>
-                        </li>
-
-                        }
+                        {user?.user?.role === "admin" && (
+                          <li>
+                            <Link
+                              className="px-4 py-2 w-full inline-block hover:bg-gray-50"
+                              to="/admin/dashboard"
+                            >
+                              Dashboard
+                            </Link>
+                          </li>
+                        )}
                         <Link
-                          to={
-                            !isAuthenticated
-                              ? "/sign-in?redirect=my/orders"
-                              : "/my/orders"
-                          }
+                        to="/my/orders"
                         >
                           <a className="px-4 py-2 w-full inline-block hover:bg-gray-50">
                             My Orders
@@ -175,10 +161,16 @@ const Header = () => {
           </nav>
 
           {/* Search Nav */}
-          <div className={`fixed top-0 left-0 w-full min-h-[320px] bg-white p-8 mx-auto transition-all shadow-[rgba(5,13,54,0.05)_5px_15px_30px_0px] z-20 ${!searchActive && "-translate-y-full"} `}>
+          <div
+            className={`fixed top-0 left-0 w-full min-h-[320px] bg-white p-8 mx-auto transition-all shadow-[rgba(5,13,54,0.05)_5px_15px_30px_0px] z-20 ${
+              !searchActive && "-translate-y-full"
+            } `}
+          >
             <div className="container mx-auto">
-              <button className="absolute text-gray-800 z-30 top-[15%] right-[15%] !text-8"
-              onClick={() => setSearchActive(false)}>
+              <button
+                className="absolute text-gray-800 z-30 top-[15%] right-[15%] !text-8"
+                onClick={() => setSearchActive(false)}
+              >
                 <Close />
               </button>
               <div>
@@ -218,7 +210,9 @@ const Header = () => {
             </div>
           </div>
           <div
-            className={`top-0 left-0 overLay bg-[rgba(0,0,0,0.5)] fixed h-full w-full z-10 ${!searchActive && "invisible opacity-0"} `}
+            className={`top-0 left-0 overLay bg-[rgba(0,0,0,0.5)] fixed h-full w-full z-10 ${
+              !searchActive && "invisible opacity-0"
+            } `}
             onClick={() => setSearchActive(false)}
           ></div>
         </div>

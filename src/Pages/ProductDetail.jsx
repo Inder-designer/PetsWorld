@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { getProduct, getProductDetail } from "../actions/productAction";
-import CurrencyFormat from "../helpers/CurrencyFormatter";
+import CurrencyFormat, { formatDate } from "../helpers/CurrencyFormatter";
 import DiscountPrice from "../helpers/DiscountPrice";
 import ReactStars from "react-rating-stars-component";
 import product1 from "../Assets/Images/Product1.jpg";
@@ -10,6 +10,7 @@ import {
   AddOutlined,
   Error,
   FavoriteBorderOutlined,
+  FavoriteRounded,
   RemoveOutlined,
   ShoppingBasket,
   Star,
@@ -20,13 +21,25 @@ import { toast } from "react-toastify";
 import { addToCart, getCartItems } from "../actions/cartAction";
 import Loading from "../components/Loading";
 import { Rating } from "@mui/material";
+import {
+  addToWishlist,
+  clearErrors,
+  getWishlist,
+  removeFromWishlist,
+} from "../actions/wishlistAction";
 
 const ProductDetail = () => {
   const { productId } = useParams();
   const id = productId.split("+")[0];
   const dispatch = useDispatch();
+  const { isAuthenticated } = useSelector((state) => state.user);
   const { product, isLoading, error } = useSelector((state) => state.product);
   const { products } = useSelector((state) => state.products);
+  const {
+    wishlist,
+    isLoading: wishlistLoading,
+    error: wishlistErr,
+  } = useSelector((state) => state.wishlist);
   const [quantity, setQuantity] = useState(1);
   const [productImg, setProductImg] = useState();
   const reviewSectionRef = useRef(null);
@@ -95,11 +108,45 @@ const ProductDetail = () => {
   };
 
   const handleAddToCart = () => {
-    dispatch(addToCart(quantity, product._id));
+    if (!isAuthenticated) {
+      toast.error("You must login first!");
+    } else {
+      dispatch(addToCart(quantity, product._id));
+    }
   };
+
+  const isInWishlist = (id) =>
+    wishlist?.wishlist?.wishlistItems.some((item) => item.product._id === id);
+
+  const handleAddWishlist = () => {
+    if (!isAuthenticated) {
+      toast.error("You must login first!");
+    } else {
+      dispatch(addToWishlist(product._id)).then(() => {
+        dispatch(getWishlist()); // Refetch wishlist after adding
+      });
+    }
+  };
+
+  const handleRemoveWishlist = () => {
+    if (!isAuthenticated) {
+      toast.error("You must login first!");
+    } else {
+      dispatch(removeFromWishlist(product._id)).then(() => {
+        dispatch(getWishlist()); // Refetch wishlist after adding
+      });
+    }
+  };
+
+  useEffect(() => {
+    if (wishlistErr) {
+      dispatch(clearErrors());
+    }
+  }, [dispatch, wishlistErr]);
 
   return (
     <div className="py-10">
+      {wishlistLoading && <Loading/>}
       {isLoading ? (
         <Loading />
       ) : product ? (
@@ -125,7 +172,13 @@ const ProductDetail = () => {
                       {product.ratings}
                     </span>
                     {/* <ReactStars {...options} /> */}
-                    <Rating name="half-rating-read" size="small" defaultValue={product.ratings} precision={0.5} readOnly />
+                    <Rating
+                      name="half-rating-read"
+                      size="small"
+                      defaultValue={product.ratings}
+                      precision={0.5}
+                      readOnly
+                    />
                   </div>
 
                   <span className="text-gray-500">
@@ -208,17 +261,31 @@ const ProductDetail = () => {
                     >
                       <ShoppingBasket className="mr-3 !text-xl" /> Add to Cart
                     </button>
-                    <button
-                      className="w-2/5 border hover:border-[#636363] uppercase  text-gray-600 font-semibold py-4
+                    {isInWishlist(product._id) ? (
+                      <button
+                        className="w-2/5 bg-gray-500 hover:bg-gray-600 uppercase text-white font-semibold py-4
              text-sm rounded flex items-center justify-center "
-                    >
-                      <FavoriteBorderOutlined className="mr-3 !text-xl" />{" "}
-                      Whishlist
-                    </button>
+                        onClick={handleRemoveWishlist}
+                      >
+                        <FavoriteRounded className="mr-3 !text-xl text-[#ff3e6c]" />{" "}
+                        Wishlisted
+                      </button>
+                    ) : (
+                      <button
+                        className="w-2/5 border hover:border-[#636363] uppercase  text-gray-600 font-semibold py-4
+             text-sm rounded flex items-center justify-center "
+                        onClick={handleAddWishlist}
+                      >
+                        <FavoriteBorderOutlined className="mr-3 !text-xl" />{" "}
+                        Wishlist
+                      </button>
+                    )}
                   </div>{" "}
                 </div>
               ) : (
-                <p className="py-10 text-2xl font-semibold">Currently Unavailable</p>
+                <p className="py-10 text-2xl font-semibold">
+                  Currently Unavailable
+                </p>
               )}
               <hr className="my-7" />
               <div className="p_detail ">
@@ -294,6 +361,36 @@ const ProductDetail = () => {
                         {product.numOfReviews} Reviews
                       </span>
                     </div>
+                    {/* <div>
+                      <Rating className="mb-2">
+                        <Rating.Star />
+                        <Rating.Star />
+                        <Rating.Star />
+                        <Rating.Star />
+                        <Rating.Star filled={false} />
+                        <p className="ml-2 text-sm font-medium text-gray-500 dark:text-gray-400">
+                          4.95 out of 5
+                        </p>
+                      </Rating>
+                      <p className="mb-4 text-sm font-medium text-gray-500 dark:text-gray-400">
+                        1,745 global ratings
+                      </p>
+                      <Rating.Advanced percentFilled={70} className="mb-2">
+                        5 star
+                      </Rating.Advanced>
+                      <Rating.Advanced percentFilled={17} className="mb-2">
+                        4 star
+                      </Rating.Advanced>
+                      <Rating.Advanced percentFilled={8} className="mb-2">
+                        3 star
+                      </Rating.Advanced>
+                      <Rating.Advanced percentFilled={4} className="mb-2">
+                        2 star
+                      </Rating.Advanced>
+                      <Rating.Advanced percentFilled={1}>
+                        1 star
+                      </Rating.Advanced>
+                    </div> */}
                   </div>
                   <div className="reviewBox">
                     {product && product.reviews && product.reviews.length > 0
@@ -315,7 +412,7 @@ const ProductDetail = () => {
                               <span className="font-semibold">
                                 {review.name}
                               </span>{" "}
-                              <span>3 months ago</span>
+                              <span>{formatDate(review.createdAt)}</span>
                             </p>
                           </div>
                         ))

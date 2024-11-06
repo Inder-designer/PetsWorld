@@ -1,13 +1,14 @@
 import { GET_ATTRIBUTES_FAIL, GET_ATTRIBUTES_REQUEST, GET_ATTRIBUTES_SUCCESS, UPDATE_ATTRIBUTE_FAIL, UPDATE_ATTRIBUTE_REQUEST, UPDATE_ATTRIBUTE_SUCCESS, UPDATE_ATTRIBUTE_RESET, ADD_ATTRIBUTE_FAIL, ADD_ATTRIBUTE_REQUEST, ADD_ATTRIBUTE_SUCCESS, CLEAR_ERRORS } from "../constants/attributesConstants";
 import axios from "axios";
-import { API_URL, CONFIG } from "../../../constants/apiConstants";
+import { API_URL, CONFIG, getConfig } from "../../../constants/apiConstants";
 import { toast } from "react-toastify";
 
 // Get Attributes
 export const getAttributes = () => async (dispatch) => {
     try {
         dispatch({ type: GET_ATTRIBUTES_REQUEST });
-        const { data } = await axios.get(`${API_URL}/attributes`, CONFIG);
+        const config = getConfig()
+        const { data } = await axios.get(`${API_URL}/attributes`, config);
         dispatch({ type: GET_ATTRIBUTES_SUCCESS, payload: data });
     } catch (error) {
         dispatch({
@@ -21,7 +22,8 @@ export const getAttributes = () => async (dispatch) => {
 export const addAttribute = (attribute,setOpenModal) => async (dispatch) => {
     try {
         dispatch({ type: ADD_ATTRIBUTE_REQUEST });
-        const { data } = await axios.post(`${API_URL}/admin/attribute/new`, attribute, CONFIG);
+        const config = getConfig()
+        const { data } = await axios.post(`${API_URL}/admin/attribute/new`, attribute, config);
         dispatch({ type: ADD_ATTRIBUTE_SUCCESS, payload: data });
         toast.success(data.message);
         setOpenModal(false)
@@ -38,7 +40,8 @@ export const addAttribute = (attribute,setOpenModal) => async (dispatch) => {
 export const updateAttribute = (attribute, id) => async (dispatch) => {
     try {
         dispatch({ type: UPDATE_ATTRIBUTE_REQUEST });
-        const { data } = await axios.put(`${API_URL}/admin/attribute/${id}`, attribute, CONFIG);
+        const config = getConfig()
+        const { data } = await axios.put(`${API_URL}/admin/attribute/${id}`, attribute, config);
         dispatch({ type: UPDATE_ATTRIBUTE_SUCCESS, payload: data.success });
         toast.success(data.message);
     } catch (error) {

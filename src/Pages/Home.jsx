@@ -9,6 +9,8 @@ import Banner from "../components/Banner/Banner";
 import TodayDeals from "../components/TodayDeals/TodayDeals";
 import WeekDeals from "../components/WeekDeals/WeekDeals";
 import BestSelling from "../components/BestSelling/BestSelling";
+import TrendingCollection from "../components/TrendingCollection/TrendingCollection.jsx";
+import CustomersReviews from "../components/CustomersReviews/CustomersReviews.jsx";
 import BrowseCate from "../components/BrowseCate/BrowseCate";
 
 const Home = () => {
@@ -47,6 +49,8 @@ const Home = () => {
         <BestSelling pet="dog"/>
         <WeekDeals/>
         <BestSelling pet="cat"/>
+        <TrendingCollection/>
+        {/* <CustomersReviews/> */}
         {/* {Loading ? (
           <div className="grid grid-cols-5 gap-x-6 gap-y-8 container mx-auto">
             <ProductSkeleton cards={10}/>

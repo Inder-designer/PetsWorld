@@ -1,13 +1,14 @@
 import { GET_USERS_REQUEST, GET_USERS_FAIL, GET_USERS_SUCCESS, CLEAR_ERRORS } from "../constants/userConstants";
 import axios from "axios";
-import { API_URL, CONFIG, CONFIG_MULTI } from "../../../constants/apiConstants";
+import { API_URL, CONFIG, CONFIG_MULTI, getConfig } from "../../../constants/apiConstants";
 import { toast } from "react-toastify";
 
 // Get All Users
 export const getAllUsers = () => async (dispatch) => {
     try {
         dispatch({ type: GET_USERS_REQUEST });
-        const { data } = await axios.get(`${API_URL}/admin/users`, CONFIG);
+        const config = getConfig()
+        const { data } = await axios.get(`${API_URL}/admin/users`, config);
         dispatch({ type: GET_USERS_SUCCESS, payload: data });
     } catch (error) {
         dispatch({
