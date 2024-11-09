@@ -78,7 +78,7 @@ export const userLogout = ({ navigate }) => async (dispatch) => {
         dispatch({ type: LOGOUT_SUCCESS, payload: data })
         console.log(data);
         if (data.success) {
-            navigate("logged out")
+            console.log("logged out")
         } else {
             console.log("Not Logged");
         }
