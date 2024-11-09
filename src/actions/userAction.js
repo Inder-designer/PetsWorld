@@ -2,6 +2,7 @@ import { toast } from "react-toastify"
 import { API_URL, CONFIG, getConfig } from "../constants/apiConstants"
 import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAIL, LOGOUT_REQUEST, LOGOUT_SUCCESS, LOGOUT_FAIL, LOAD_USER_FAIL, LOAD_USER_SUCCESS, LOAD_USER_REQUEST, REGISTER_FAIL, REGISTER_SUCCESS, REGISTER_REQUEST, UPDATE_PROFILE_FAIL, UPDATE_PROFILE_REQUEST, UPDATE_PROFILE_SUCCESS, CHANGE_PSWD_FAIL, CHANGE_PSWD_REQUEST, CHANGE_PSWD_RESET, CHANGE_PSWD_SUCCESS, FORGOT_PSWD_REQUEST, FORGOT_PSWD_SUCCESS, FORGOT_PSWD_FAIL, RESET_PSWD_FAIL, RESET_PSWD_REQUEST, RESET_PSWD_SUCCESS } from "../constants/userConstants"
 import axios from "axios"
+import { Cookie } from "@mui/icons-material"
 
 
 // LOGIN
@@ -67,32 +68,57 @@ export const loadUser = () => async (dispatch) => {
 }
 
 // LOGOUT
+// export const userLogout = ({ navigate }) => async (dispatch) => {
+//     try {
+//         dispatch({ type: LOGOUT_REQUEST })
+
+//         const config = getConfig();
+//         const { data } = await axios.get(`${API_URL}/logout`,
+//             config
+//         )
+//         localStorage.removeItem('token')
+//         dispatch({ type: LOGOUT_SUCCESS, payload: data })
+//         console.log(data);
+//         if (data.success) {
+//             navigate("/")
+//             Cookie.
+//         }else{
+//             console.log("Not Logged");
+//         }
+//         // console.log("Redirected using window.location.href.");
+//         // console.log("logout");
+//     } catch (error) {
+//         dispatch({
+//             type: LOGOUT_FAIL, payload: error.response && error.response.data.message ? error
+//                 : error.message
+//         })
+//         console.log(error);
+//     }
+// }
 export const userLogout = ({ navigate }) => async (dispatch) => {
     try {
-        dispatch({ type: LOGOUT_REQUEST })
+        dispatch({ type: LOGOUT_REQUEST });
 
-        const config = getConfig();
-        const { data } = await axios.get(`${API_URL}/logout`,
-            config
-        )
-        localStorage.removeItem('token')
-        dispatch({ type: LOGOUT_SUCCESS, payload: data })
-        console.log(data);
-        if (data.message == "Logged Out") {
-            navigate("/")
-        }else{
-            console.log("Not Logged");
-        }
-        // console.log("Redirected using window.location.href.");
-        // console.log("logout");
+        // Clear token from localStorage
+        localStorage.removeItem('token');
+
+        // Clear token from cookies
+        Cookies.remove('token');
+
+        // Dispatch success action
+        dispatch({ type: LOGOUT_SUCCESS, payload: { success: true, message: "Logged out successfully" } });
+
+        // Redirect to the home page after logout
+        navigate("/");
+
     } catch (error) {
         dispatch({
-            type: LOGOUT_FAIL, payload: error.response && error.response.data.message ? error
-                : error.message
-        })
+            type: LOGOUT_FAIL,
+            payload: error.message || "Logout failed",
+        });
         console.log(error);
     }
-}
+};
 
 // Update Profile
 
