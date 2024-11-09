@@ -103,7 +103,12 @@ export const userLogout = ({ navigate }) => async (dispatch) => {
         localStorage.removeItem('token');
 
         // Clear token from cookies
-        Cookies.remove('token');
+        Cookies.remove('token', {
+            path: '/',
+            domain: window.location.hostname,
+            sameSite: 'None',
+            secure: process.env.NODE_ENV === "production",
+        });
 
         // Dispatch success action
         dispatch({ type: LOGOUT_SUCCESS, payload: { success: true, message: "Logged out successfully" } });
