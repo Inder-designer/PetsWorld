@@ -77,7 +77,12 @@ export const userLogout = ({ navigate }) => async (dispatch) => {
         )
         localStorage.removeItem('token')
         dispatch({ type: LOGOUT_SUCCESS, payload: data })
-        window.location.reload()
+        console.log(data);
+        if (data.message == "Logged Out") {
+            navigate("/")
+        }else{
+            console.log("Not Logged");
+        }
         // console.log("Redirected using window.location.href.");
         // console.log("logout");
     } catch (error) {
