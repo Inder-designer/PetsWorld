@@ -68,62 +68,30 @@ export const loadUser = () => async (dispatch) => {
 }
 
 // LOGOUT
-// export const userLogout = ({ navigate }) => async (dispatch) => {
-//     try {
-//         dispatch({ type: LOGOUT_REQUEST })
-
-//         const config = getConfig();
-//         const { data } = await axios.get(`${API_URL}/logout`,
-//             config
-//         )
-//         localStorage.removeItem('token')
-//         dispatch({ type: LOGOUT_SUCCESS, payload: data })
-//         console.log(data);
-//         if (data.success) {
-//             navigate("/")
-//             Cookie.
-//         }else{
-//             console.log("Not Logged");
-//         }
-//         // console.log("Redirected using window.location.href.");
-//         // console.log("logout");
-//     } catch (error) {
-//         dispatch({
-//             type: LOGOUT_FAIL, payload: error.response && error.response.data.message ? error
-//                 : error.message
-//         })
-//         console.log(error);
-//     }
-// }
 export const userLogout = ({ navigate }) => async (dispatch) => {
     try {
-        dispatch({ type: LOGOUT_REQUEST });
+        dispatch({ type: LOGOUT_REQUEST })
 
-        // Clear token from localStorage
-        localStorage.removeItem('token');
-
-        // Clear token from cookies
-        Cookies.remove('token', {
-            path: '/',
-            domain: window.location.hostname,
-            sameSite: 'None',
-            secure: process.env.NODE_ENV === "production",
-        });
-
-        // Dispatch success action
-        dispatch({ type: LOGOUT_SUCCESS, payload: { success: true, message: "Logged out successfully" } });
-
-        // Redirect to the home page after logout
-        navigate("/");
-
+        Cookies.get("token")
+        const { data } = await axios.get(`${API_URL}/logout`)
+        localStorage.removeItem('token')
+        dispatch({ type: LOGOUT_SUCCESS, payload: data })
+        console.log(data);
+        if (data.success) {
+            navigate("logged out")
+        } else {
+            console.log("Not Logged");
+        }
+        // console.log("Redirected using window.location.href.");
+        // console.log("logout");
     } catch (error) {
         dispatch({
-            type: LOGOUT_FAIL,
-            payload: error.message || "Logout failed",
-        });
+            type: LOGOUT_FAIL, payload: error.response && error.response.data.message ? error
+                : error.message
+        })
         console.log(error);
     }
-};
+}
 
 // Update Profile
 
