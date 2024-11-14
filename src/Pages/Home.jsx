@@ -16,16 +16,13 @@ import BrowseCate from "../components/BrowseCate/BrowseCate";
 const Home = () => {
   const dispatch = useDispatch();
   const { products, isLoading } = useSelector((state) => state.products);
-  const [Loading, setLoading] = useState(true)
+  const [Loading, setLoading] = useState(true);
 
   useEffect(() => {
     dispatch(getProduct());
-    setTimeout(
-      () => {
-        setLoading(false);
-      },
-      500
-    )
+    setTimeout(() => {
+      setLoading(false);
+    }, 500);
   }, [dispatch]);
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -40,16 +37,17 @@ const Home = () => {
 
   // Logic for handling page changes
   const onPageChange = (pageNumber) => setCurrentPage(pageNumber);
+  console.log(import.meta.env, "env");
   return (
     <div className="pb-10">
       <div className="">
-        <Banner/>
-        <TodayDeals/>
-        <BrowseCate/>
-        <BestSelling pet="dog"/>
-        <WeekDeals/>
-        <BestSelling pet="cat"/>
-        <TrendingCollection/>
+        <Banner />
+        <TodayDeals />
+        <BrowseCate />
+        <BestSelling pet="dog" />
+        <WeekDeals />
+        <BestSelling pet="cat" />
+        <TrendingCollection />
         {/* <CustomersReviews/> */}
         {/* {Loading ? (
           <div className="grid grid-cols-5 gap-x-6 gap-y-8 container mx-auto">
