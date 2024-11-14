@@ -9,7 +9,6 @@ const NavMenu = () => {
   const [activeMenu, setActiveMenu] = useState(null);
   const [categories, setCategories] = useState([]);
   const [newcategories, setNewCategories] = useState([]);
-  const [attributes, setAttributes] = useState([]);
 
   const getCategories = async () => {
     try {
@@ -19,44 +18,41 @@ const NavMenu = () => {
       console.error("Error fetching categories:", error);
     }
   };
-  const getAttributes = async () => {
-    try {
-      const res = await axios.get(`${API_URL}/attributes`);
-      setAttributes(res.data.attributes);
-    } catch (error) {
-      console.error("Error fetching categories:", error);
-    }
-  };
 
   useEffect(() => {
     getCategories();
-    getAttributes();
   }, []);
 
   useEffect(() => {
-    if (categories.length > 0 && attributes.length > 0) {
-      const lifeStageAttribute = attributes.find(
-        (attr) => attr.name === "Life Stage"
-      );
+    const newCategories = [
+      ...categories, // Spread the existing categories
+      ...[
+        {
+          level0: "Life Stage",
+          level1: [
+            {
+              name: "Puppy",
+              level2: [],
+            },
+            {
+              name: "Kitten",
+              level2: [],
+            },
+            {
+              name: "Senior",
+              level2: [],
+            },
+            {
+              name: "Adult",
+              level2: [],
+            },
+          ],
+        },
+      ],
+    ];
 
-      const newCategories = [
-        ...categories, // Spread the existing categories
-        ...(lifeStageAttribute
-          ? [
-              {
-                level0: "Life Stage",
-                level1: lifeStageAttribute.values.map((e) => ({
-                  name: e,
-                  level2: [],
-                })),
-              },
-            ]
-          : []),
-      ];
-
-      setNewCategories(newCategories);
-    }
-  }, [categories, attributes]);
+    setNewCategories(newCategories);
+  }, [categories]);
 
   const handleMouseEnter = (index) => {
     setActiveMenu(index);

@@ -1,9 +1,10 @@
 import { Modal } from "flowbite-react";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const ResetEmailSend = ({ openModal, setOpenModal, email }) => {
   function maskEmail(email) {
-    const [localPart, domain] = email.split("@");
+    const [localPart, domain] = email?.split("@");
     if (localPart.length <= 2) {
       // If the local part is too short to mask, return it as is
       return email;
@@ -25,8 +26,8 @@ const ResetEmailSend = ({ openModal, setOpenModal, email }) => {
           <div className="p-5 pb-0x text-center">
             <h6 className="text-2xl">Email Sent</h6>
             <p className="text-sm mt-2">
-              We sent an email to {maskEmail(email)} with a link to get back into your
-              account.
+              We sent an email to {maskEmail(email)} with a link to get back
+              into your account.
             </p>
           </div>
           <div

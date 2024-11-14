@@ -21,6 +21,8 @@ const ShopPage = () => {
   const [price, setPrice] = useState([0, 30000]);
   const [categories, setCategories] = useState([]);
   const [attributes, setAttributes] = useState([]);
+  const [filterAttr, setFilterAttr] = useState([]);
+  const [filterAttrValues, setFilterAttrValues] = useState([]);
   const [ratings, setRating] = useState(0);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedSubmenu, setSelectedSubmenu] = useState("");
@@ -91,6 +93,7 @@ const ShopPage = () => {
     setSelectedCategory(newCategory);
     setSelectedSubmenu("");
     setSelectedSubMenuItem("");
+    setFilterAttrValues([]);
     if (!checked && !selectedSubmenu && !selectedSubMenuItem) {
       updateURL("", "", "");
     } else {
@@ -138,14 +141,77 @@ const ShopPage = () => {
     dispatch(getFilterProduct(url));
   }, [location, dispatch, categoryName]);
 
+  useEffect(() => {
+    if (attributes) {
+      console.log(attributes);
+      const filteredAttributes = attributes.filter(
+        (e) =>
+          e.level0.includes(selectedCategory) &&
+          (e.variant === "no" || e.variant === "false")
+      );
+      console.log("filterAttr:", filteredAttributes);
+      setFilterAttr(filteredAttributes);
+    }
+  }, [attributes, selectedCategory]);
+
+  const handleAttr = (name, value) => {
+    setFilterAttrValues((prev) => {
+      // Find the index of the attribute with the same name
+      const attrIndex = prev.findIndex((attr) => attr.name === name);
+
+      if (attrIndex !== -1) {
+        // If the attribute exists, check if the value is already in the values array
+        const attr = prev[attrIndex];
+        const values = attr.values.includes(value)
+          ? attr.values.filter((v) => v !== value) // If exists, remove the value
+          : [...attr.values, value]; // If not, add the value
+
+        // If values array becomes empty, remove the attribute object from the array
+        if (values.length === 0) {
+          return [...prev.slice(0, attrIndex), ...prev.slice(attrIndex + 1)];
+        }
+
+        // Return the updated state with the modified attribute
+        return [
+          ...prev.slice(0, attrIndex),
+          { ...attr, values },
+          ...prev.slice(attrIndex + 1),
+        ];
+      } else {
+        // If the attribute doesn't exist, add it with the new value
+        return [...prev, { name, values: [value] }];
+      }
+    });
+  };
+
+  useEffect(() => {
+    console.log(filterAttrValues);
+  }, [filterAttrValues]);
+
   const filteredProducts = (
     selectedCategory ? products || [] : allproducts || []
   ).filter((product) => {
     const withinPriceRange =
       DiscountPrice(product.price, product.discount) >= price[0] &&
       DiscountPrice(product.price, product.discount) <= price[1];
+
     const meetsRatingRequirement = product.ratings >= ratings;
-    return withinPriceRange && meetsRatingRequirement;
+
+    // Check if the product matches all selected attribute filters
+    const matchesAllAttributes = filterAttrValues.every((filterAttr) => {
+      // Find the product's attribute by name
+      const productAttr = product.attributes.find(
+        (attr) => attr.name === filterAttr.name
+      );
+
+      // Check if product's attribute has any of the values in filterAttr
+      return (
+        productAttr &&
+        filterAttr.values.some((value) => productAttr.values.includes(value))
+      );
+    });
+
+    return withinPriceRange && meetsRatingRequirement && matchesAllAttributes;
   });
 
   console.log([
@@ -311,7 +377,7 @@ const ShopPage = () => {
                 </form>
               </div>
 
-              {/* Dynamic Attributes */}
+              {/* Dynamic Rating */}
               <div className="mt-4">
                 <p className="font-bold">Rating</p>
                 <Slider
@@ -325,7 +391,36 @@ const ShopPage = () => {
                   valueLabelDisplay="auto"
                 />
               </div>
+              <div className="mt-4">
+                {filterAttr.map((attr, attrIndex) => (
+                  <div key={attrIndex} className="mt-4">
+                    <p className="font-bold text-sm uppercase mb-1">
+                      {attr.name}
+                    </p>
+                    {attr.values.map((item, itemIndex) => (
+                      <div key={itemIndex}>
+                        <label>
+                          <input
+                            type="checkbox"
+                            className="form-checkbox h-3 w-3"
+                            checked={filterAttrValues.some(
+                              (filter) =>
+                                filter.name === attr.name &&
+                                filter.values.includes(item)
+                            )}
+                            value={item}
+                            onChange={() => handleAttr(attr.name, item)}
+                          />
+                          <span className="ml-2 capitalize">{item}</span>
+                        </label>
+                      </div>
+                    ))}
+                  </div>
+                ))}
+              </div>
             </div>
+
+            {/* Dynamic Attributes */}
 
             {/* Products Display */}
             <div className="w-[80%] px-6 pt-6">

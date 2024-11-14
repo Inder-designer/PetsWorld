@@ -33,7 +33,9 @@ const Header = () => {
   };
 
   const HandleLogout = () => {
-    dispatch(userLogout({ navigate }));
+    // dispatch(userLogout({ navigate }));
+    window.location.href = "/sign-in";
+    localStorage.removeItem("token");
   };
 
   useEffect(() => {
@@ -60,7 +62,10 @@ const Header = () => {
             aria-label="Global"
           >
             <div className="flex">
-              <Link to="/" className="-m-1.5 p-1.5 font-semibold text-gray-700 text-lg">
+              <Link
+                to="/"
+                className="-m-1.5 p-1.5 font-semibold text-gray-700 text-lg"
+              >
                 Pet World
               </Link>
             </div>
@@ -77,7 +82,7 @@ const Header = () => {
                 </li>
                 <li>
                   <Link
-                  to="/wishlist"
+                    to="/wishlist"
                     className="w-10 h-10 rounded-full bg-[#ecfbff] flex justify-center items-center"
                   >
                     <FavoriteBorder className="bg-transparent !text-xl text-gray-700" />
@@ -128,9 +133,7 @@ const Header = () => {
                             </Link>
                           </li>
                         )}
-                        <Link
-                        to="/my/orders"
-                        >
+                        <Link to="/my/orders">
                           <a className="px-4 py-2 w-full inline-block hover:bg-gray-50">
                             My Orders
                           </a>

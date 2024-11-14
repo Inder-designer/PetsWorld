@@ -92,11 +92,13 @@ const ForgotPassword = () => {
           </div>
         </div>
       </div>
-      <ResetEmailSend
-        openModal={openModal}
-        setOpenModal={setOpenModal}
-        email={email}
-      />
+      {email && (
+        <ResetEmailSend
+          openModal={openModal}
+          setOpenModal={setOpenModal}
+          email={email}
+        />
+      )}
     </div>
   );
 };

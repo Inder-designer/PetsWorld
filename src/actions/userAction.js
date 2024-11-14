@@ -11,16 +11,44 @@ export const userLogin = (email, password) => async (dispatch) => {
     try {
         dispatch({ type: LOGIN_REQUEST })
 
-        const config = getConfig();
+        // Get geolocation coordinates
+        // const getLocation = () => new Promise((resolve, reject) => {
+        //     if (navigator.geolocation) {
+        //         navigator.geolocation.getCurrentPosition(
+        //             (position) => {
+        //                 const { latitude, longitude } = position.coords;
+        //                 resolve({ latitude, longitude });
+        //             },
+        //             (error) => reject(new Error("Unable to retrieve location")),
+        //             { enableHighAccuracy: true }
+        //         );
+        //     } else {
+        //         reject(new Error("Geolocation not supported"));
+        //     }
+        // });
 
-        const res = await axios.post(`${API_URL}/login`, { email, password },
+        // let locationData;
+        // try {
+        //     locationData = await getLocation();
+        // } catch (error) {
+        //     dispatch({ type: LOGIN_FAIL, payload: "Location access required for login" });
+        //     return;
+        // }
+        // console.log("locationData:", locationData);
+        // console.log(
+        //     "latitude:", locationData.latitude,
+        //     "longitude:", locationData.longitude);
+
+        const config = getConfig();
+        const res = await axios.post(`${API_URL}/login`, {
+            email, password,
+        },
             config
         )
 
         dispatch({ type: LOGIN_SUCCESS, payload: res.data })
 
         localStorage.setItem('token', res.data.token)
-        // navigate('/')
     } catch (error) {
         dispatch({ type: LOGIN_FAIL, payload: error.response && error.response.data.message ? error : error.message })
     }
@@ -39,6 +67,7 @@ export const userRegister = ({ name, email, password, navigate }) => async (disp
             config
         )
         dispatch({ type: REGISTER_SUCCESS, payload: res.data })
+        localStorage.setItem('token', res.data.token)
         navigate('/')
     } catch (error) {
         dispatch({
@@ -72,18 +101,12 @@ export const userLogout = ({ navigate }) => async (dispatch) => {
     try {
         dispatch({ type: LOGOUT_REQUEST })
 
-        Cookies.get("token")
-        const { data } = await axios.get(`${API_URL}/logout`)
+        // const { data } = await axios.get(`${API_URL}/logout`)
         localStorage.removeItem('token')
-        dispatch({ type: LOGOUT_SUCCESS, payload: data })
-        console.log(data);
-        if (data.success) {
-            console.log("logged out")
-        } else {
-            console.log("Not Logged");
-        }
-        // console.log("Redirected using window.location.href.");
-        // console.log("logout");
+        dispatch({ type: LOGOUT_SUCCESS })
+        // console.log(data);
+        // navigate("/sign-in");
+        window.location.href = "/sign-in";
     } catch (error) {
         dispatch({
             type: LOGOUT_FAIL, payload: error.response && error.response.data.message ? error

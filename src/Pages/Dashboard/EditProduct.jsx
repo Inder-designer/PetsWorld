@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
-import CustomTextEditor from "../../helpers/TextEditor";
+// import CustomTextEditor from "../../helpers/TextEditor";
 import {
   AddOutlined,
   DeleteOutlineOutlined,
@@ -275,7 +275,7 @@ const EditProduct = () => {
                       required
                     />
                   </div>
-                  <div className="">
+                  {/* <div className="">
                     <label
                       htmlFor="description"
                       className="block font-medium text-sm opacity-60 mb-2"
@@ -286,7 +286,7 @@ const EditProduct = () => {
                       value={editProduct.description}
                       onChange={handleDescriptionChange}
                     />
-                  </div>
+                  </div> */}
                 </div>
               </div>
 

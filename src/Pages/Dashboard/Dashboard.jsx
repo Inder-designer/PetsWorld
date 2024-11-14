@@ -85,25 +85,11 @@ const Dashboard = () => {
     return initialData;
   };
 
-  const data = [
-    { name: "Jan", currentYear: 30000, lastYear: 1000 },
-    { name: "Feb", currentYear: 20000, lastYear: 1500 },
-    { name: "Mar", currentYear: 27000, lastYear: 60000 },
-    { name: "Apr", currentYear: 18000, lastYear: 22000 },
-    { name: "May", currentYear: 23000, lastYear: 25000 },
-    { name: "Jun", currentYear: 34000, lastYear: 28000 },
-    { name: "Jul", lastYear: 35000 },
-    { name: "Aug", lastYear: 28000 },
-    { name: "Sep", lastYear: 20000 },
-    { name: "Oct", lastYear: 22000 },
-    { name: "Nov", lastYear: 24000 },
-    { name: "Dec", lastYear: 28000 },
-  ];
 
   if (usersLoading || productsLoading || ordersLoading) {
     return <Loading />;
   }
-
+console.log(userData);
   return (
     <div>
       <div className="grid grid-cols-4 gap-6">
@@ -139,11 +125,11 @@ const Dashboard = () => {
               </span>
             </div>
           </div>
-          <LineCharts data={data} />
+          <LineCharts orderList={orderList} />
         </div>
         <div className="bg-white rounded-2xl p-6 pl-0 w-[30%]">
           <div className="flex justify-between items-center pl-10 mb-5">
-            <h6 className="text-lg font-semibold">New Orders</h6>
+            <h6 className="text-lg font-semibold">Orders</h6>
             <span>
               <span className="flex items-center gap-1.5 mb-1">
                 <span className="w-3 h-3 rounded-full bg-[#8884d8] inline-block"></span>
@@ -159,20 +145,20 @@ const Dashboard = () => {
         </div>
       </div>
       <div className="mt-6 flex gap-6">
-        <div className="bg-white rounded-2xl p-6 w-[70%]">
+        <div className="bg-white rounded-2xl p-6 w-full">
           <div className="flex justify-between items-center pl-4 mb-5">
             <Link to="/admin/orders" className="text-lg font-semibold">
-              All Orders
+              New Orders
             </Link>
           </div>
-          <Table />
+          <Table orders={orderList} />
         </div>
-        <div className="bg-white rounded-2xl p-6 pl-0 w-[30%]">
+        {/* <div className="bg-white rounded-2xl p-6 pl-0 w-[30%]">
           <div className="flex justify-between items-center pl-16 mb-5">
             <h6 className="text-lg font-semibold">New Orders</h6>
           </div>
           <BarCharts />
-        </div>
+        </div> */}
       </div>
     </div>
   );
