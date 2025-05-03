@@ -62,7 +62,7 @@ const Table = ({ orders }) => {
       width: 150,
       renderCell: (params) => (
         <span className="flex h-full items-center">
-          {params.row.shippingInfo.name}
+          {params.row.shippingInfo?.name}
         </span>
       ),
     },
